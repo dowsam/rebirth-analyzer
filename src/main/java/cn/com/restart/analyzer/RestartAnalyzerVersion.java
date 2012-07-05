@@ -11,7 +11,7 @@ import cn.com.restart.commons.Version;
  *
  * @author l.xue.nong
  */
-public class VersionImpl implements Version {
+public final class RestartAnalyzerVersion implements Version {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8043854155386241988L;
@@ -29,7 +29,7 @@ public class VersionImpl implements Version {
 	 */
 	@Override
 	public String getModuleName() {
-		return "summall-analyzer";
+		return "restart-analyzer";
 	}
 
 }
