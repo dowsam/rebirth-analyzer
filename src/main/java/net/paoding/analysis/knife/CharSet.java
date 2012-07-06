@@ -1,46 +1,63 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer CharSet.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.0
- * 
+ * The Class CharSet.
+ *
+ * @author l.xue.nong
  */
 public class CharSet {
 	
+	/**
+	 * Checks if is arabian number.
+	 *
+	 * @param ch the ch
+	 * @return true, if is arabian number
+	 */
 	public static boolean isArabianNumber(char ch) {
 		return ch >= '0' && ch <= '9';
 	}
 
+	/**
+	 * Checks if is lanting letter.
+	 *
+	 * @param ch the ch
+	 * @return true, if is lanting letter
+	 */
 	public static boolean isLantingLetter(char ch) {
 		return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z';
 	}
 
+	/**
+	 * Checks if is cjk unified ideographs.
+	 *
+	 * @param ch the ch
+	 * @return true, if is cjk unified ideographs
+	 */
 	public static boolean isCjkUnifiedIdeographs(char ch) {
 		return ch >= 0x4E00 && ch < 0xA000;
 	}
 	
+	/**
+	 * Checks if is bom.
+	 *
+	 * @param ch the ch
+	 * @return true, if is bom
+	 */
 	public static boolean isBom(char ch) {
 		// ref:http://www.w3.org/International/questions/qa-utf8-bom
 		return ch == 0xFEFF || ch == 0xFFFE;
 	}
 	
+	/**
+	 * To number.
+	 *
+	 * @param ch the ch
+	 * @return the int
+	 */
 	public static int toNumber(char ch) {
 		switch (ch) {
 		case '0':

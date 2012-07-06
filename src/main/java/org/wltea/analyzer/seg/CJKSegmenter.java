@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer CJKSegmenter.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package org.wltea.analyzer.seg;
 
@@ -13,25 +14,25 @@ import org.wltea.analyzer.dic.Hit;
 import org.wltea.analyzer.help.CharacterHelper;
 
 /**
- * 中文（CJK）词元处理子分词器，涵盖一下范围
- * 1.中文词语
- * 2.姓名
- * 3.地名
- * 4.未知词（单字切分）
- * 5.日文/韩文（单字切分）
- * @author 林良益 
- * @version 3.2  
+ * The Class CJKSegmenter.
+ *
+ * @author l.xue.nong
  */
 public class CJKSegmenter implements ISegmenter {
 	/*
 	 * 已完成处理的位置
 	 */
+	/** The done index. */
 	private int doneIndex;
 	/*
 	 * Hit对列，记录匹配中的Hit对象
 	 */
+	/** The hit list. */
 	private List<Hit> hitList;
 	
+	/**
+	 * Instantiates a new cJK segmenter.
+	 */
 	public CJKSegmenter(){
 		doneIndex = -1;
 		//hitList = new ArrayList<Hit>();
@@ -166,10 +167,12 @@ public class CJKSegmenter implements ISegmenter {
 	}
 
 	/**
-	 * 处理未知词段
-	 * @param segmentBuff 
-	 * @param uBegin 起始位置
-	 * @param uEnd 终止位置
+	 * Process unknown.
+	 *
+	 * @param segmentBuff the segment buff
+	 * @param context the context
+	 * @param uBegin the u begin
+	 * @param uEnd the u end
 	 */
 	private void processUnknown(char[] segmentBuff , Context context , int uBegin , int uEnd){
 		Lexeme newLexeme = null;
@@ -211,6 +214,9 @@ public class CJKSegmenter implements ISegmenter {
 		}		
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.wltea.analyzer.seg.ISegmenter#reset()
+	 */
 	public void reset() {
 		//重置已处理标识
 		doneIndex = -1;

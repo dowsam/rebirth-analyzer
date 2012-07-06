@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer LetterSegmenter.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package org.wltea.analyzer.seg;
 
@@ -8,37 +9,39 @@ import org.wltea.analyzer.Context;
 import org.wltea.analyzer.help.CharacterHelper;
 
 /**
- * 负责处理字母的子分词器，涵盖一下范围
- * 1.英文单词、英文加阿拉伯数字、专有名词（公司名）
- * 2.IP地址、Email、URL
- * 
- * @author 林良益
+ * The Class LetterSegmenter.
  *
+ * @author l.xue.nong
  */
 public class LetterSegmenter implements ISegmenter {
 	
 	//链接符号
+	/** The Constant Sign_Connector. */
 	public static final char[] Sign_Connector = new char[]{'+','-','_','.','@','&','/','\\'};
 	/*
 	 * 词元的开始位置，
 	 * 同时作为子分词器状态标识
 	 * 当start > -1 时，标识当前的分词器正在处理字符
 	 */
+	/** The start. */
 	private int start;
 	/*
 	 * 记录词元结束位置
 	 * end记录的是在词元中最后一个出现的Letter但非Sign_Connector的字符的位置
 	 */
+	/** The end. */
 	private int end;
 	
 	/*
 	 * 字母起始位置
 	 */
+	/** The letter start. */
 	private int letterStart;
 
 	/*
 	 * 字母结束位置
 	 */
+	/** The letter end. */
 	private int letterEnd;
 	
 //	/*
@@ -52,7 +55,10 @@ public class LetterSegmenter implements ISegmenter {
 //	private int numberEnd;
 
 	
-	public LetterSegmenter(){
+	/**
+ * Instantiates a new letter segmenter.
+ */
+public LetterSegmenter(){
 		start = -1;
 		end = -1;
 		letterStart = -1;
@@ -87,11 +93,11 @@ public class LetterSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 处理数字字母混合输出
-	 * 如：windos2000 | linliangyi2005@gmail.com
-	 * @param input
-	 * @param context
-	 * @return
+	 * Process mix letter.
+	 *
+	 * @param input the input
+	 * @param context the context
+	 * @return true, if successful
 	 */
 	private boolean processMixLetter(char input , Context context){
 		boolean needLock = false;
@@ -197,11 +203,12 @@ public class LetterSegmenter implements ISegmenter {
 //	}
 	
 	/**
-	 * 处理纯英文字母输出
-	 * @param input
-	 * @param context
-	 * @return
-	 */
+ * Process english letter.
+ *
+ * @param input the input
+ * @param context the context
+ * @return true, if successful
+ */
 	private boolean processEnglishLetter(char input , Context context){
 		boolean needLock = false;
 		
@@ -248,9 +255,10 @@ public class LetterSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * Checks if is letter connector.
+	 *
+	 * @param input the input
+	 * @return true, if is letter connector
 	 */
 	private boolean isLetterConnector(char input){
 		for(char c : Sign_Connector){
@@ -262,8 +270,10 @@ public class LetterSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 判断char是否是可接受的起始子符
-	 * @return
+	 * Checks if is accepted char start.
+	 *
+	 * @param input the input
+	 * @return true, if is accepted char start
 	 */
 	private boolean isAcceptedCharStart(char input){
 		return CharacterHelper.isEnglishLetter(input) 
@@ -271,8 +281,10 @@ public class LetterSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 判断char是否是可接受的字符
-	 * @return
+	 * Checks if is accepted char.
+	 *
+	 * @param input the input
+	 * @return true, if is accepted char
 	 */
 	private boolean isAcceptedChar(char input){
 		return isLetterConnector(input) 
@@ -280,6 +292,9 @@ public class LetterSegmenter implements ISegmenter {
 				|| CharacterHelper.isArabicNumber(input);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.wltea.analyzer.seg.ISegmenter#reset()
+	 */
 	public void reset() {
 		start = -1;
 		end = -1;

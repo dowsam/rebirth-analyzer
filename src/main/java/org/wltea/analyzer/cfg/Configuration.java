@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Configuration.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package org.wltea.analyzer.cfg;
 
@@ -17,27 +18,34 @@ import org.wltea.analyzer.seg.LetterSegmenter;
 import org.wltea.analyzer.seg.QuantifierSegmenter;
 
 /**
- * IK Analyzer v3.2
- * 简单的配置管理类,单子模式
- * @author 林良益
+ * The Class Configuration.
  *
+ * @author l.xue.nong
  */
 public class Configuration {
 	/*
 	 * 分词器配置文件路径
 	 */	
+	/** The Constant FILE_NAME. */
 	private static final String FILE_NAME = "/IKAnalyzer.cfg.xml";
 	//配置属性——扩展字典
+	/** The Constant EXT_DICT. */
 	private static final String EXT_DICT = "ext_dict";
 	//配置属性——扩展停止词典
+	/** The Constant EXT_STOP. */
 	private static final String EXT_STOP = "ext_stopwords";
 	
+	/** The Constant CFG. */
 	private static final Configuration CFG = new Configuration();
 	
+	/** The props. */
 	private Properties props;
 	
 	/*
 	 * 初始化配置文件
+	 */
+	/**
+	 * Instantiates a new configuration.
 	 */
 	private Configuration(){
 		
@@ -56,8 +64,9 @@ public class Configuration {
 	}
 	
 	/**
-	 * 获取扩展字典配置路径
-	 * @return List<String> 相对类加载器的路径
+	 * Gets the ext dictionarys.
+	 *
+	 * @return the ext dictionarys
 	 */
 	public static List<String> getExtDictionarys(){
 		List<String> extDictFiles = new ArrayList<String>(2);
@@ -78,8 +87,9 @@ public class Configuration {
 	}
 	
 	/**
-	 * 获取扩展停止词典配置路径
-	 * @return List<String> 相对类加载器的路径
+	 * Gets the ext stop word dictionarys.
+	 *
+	 * @return the ext stop word dictionarys
 	 */
 	public static List<String> getExtStopWordDictionarys(){
 		List<String> extStopWordDictFiles = new ArrayList<String>(2);
@@ -101,9 +111,9 @@ public class Configuration {
 		
 	
 	/**
-	 * 初始化子分词器实现
-	 * （目前暂时不考虑配置扩展）
-	 * @return List<ISegmenter>
+	 * Load segmenter.
+	 *
+	 * @return the list
 	 */
 	public static List<ISegmenter> loadSegmenter(){
 		//初始化词典单例

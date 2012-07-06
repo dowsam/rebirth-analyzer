@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer IKSegmentation.java 2012-7-6 10:23:23 l.xue.nong$$
  */
 package org.wltea.analyzer;
 
@@ -12,40 +13,45 @@ import org.wltea.analyzer.help.CharacterHelper;
 import org.wltea.analyzer.seg.ISegmenter;
 
 /**
- * IK Analyzer v3.2
- * IK主分词器
- * 注：IKSegmentation是一个lucene无关的通用分词器
- * @author 林良益
+ * The Class IKSegmentation.
  *
+ * @author l.xue.nong
  */
 public final class IKSegmentation{
 
 	
+	/** The input. */
 	private Reader input;	
 	//默认缓冲区大小
+	/** The Constant BUFF_SIZE. */
 	private static final int BUFF_SIZE = 3072;
 	//缓冲区耗尽的临界值
+	/** The Constant BUFF_EXHAUST_CRITICAL. */
 	private static final int BUFF_EXHAUST_CRITICAL = 48;	
     //字符窜读取缓冲
+    /** The segment buff. */
     private char[] segmentBuff;
 	//分词器上下文
+	/** The context. */
 	private Context context;
 	//分词处理器列表
+	/** The segmenters. */
 	private List<ISegmenter> segmenters;
     
 	/**
-	 * IK主分词器构造函数
-	 * 默认最细粒度切分
-	 * @param input
+	 * Instantiates a new iK segmentation.
+	 *
+	 * @param input the input
 	 */
 	public IKSegmentation(Reader input){
 		this(input , false);
 	}
     
 	/**
-	 * IK主分词器构造函数
-	 * @param input
-	 * @param isMaxWordLength 当为true时，分词器进行最大词长切分
+	 * Instantiates a new iK segmentation.
+	 *
+	 * @param input the input
+	 * @param isMaxWordLength the is max word length
 	 */
 	public IKSegmentation(Reader input , boolean isMaxWordLength){
 		this.input = input ;
@@ -55,9 +61,10 @@ public final class IKSegmentation{
 	}
 	
 	/**
-	 * 获取下一个语义单元
-	 * @return 没有更多的词元，则返回null
-	 * @throws IOException
+	 * Next.
+	 *
+	 * @return the lexeme
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public synchronized Lexeme next() throws IOException {
 		if(context.getResultSize() == 0){
@@ -122,10 +129,11 @@ public final class IKSegmentation{
 	}
 	
     /**
-     * 根据context的上下文情况，填充segmentBuff 
-     * @param reader
-     * @return 返回待分析的（有效的）字串长度
-     * @throws IOException 
+     * Fill buffer.
+     *
+     * @param reader the reader
+     * @return the int
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     private int fillBuffer(Reader reader) throws IOException{
     	int readCount = 0;
@@ -148,8 +156,10 @@ public final class IKSegmentation{
     }	
 	
     /**
-     * 取出词元集合中的下一个词元
-     * @return Lexeme
+     * Builds the lexeme.
+     *
+     * @param lexeme the lexeme
+     * @return the lexeme
      */
     private Lexeme buildLexeme(Lexeme lexeme){
     	if(lexeme != null){
@@ -163,8 +173,9 @@ public final class IKSegmentation{
     }
 
     /**
-     * 重置分词器到初始状态
-     * @param input
+     * Reset.
+     *
+     * @param input the input
      */
 	public synchronized void reset(Reader input) {
 		this.input = input;

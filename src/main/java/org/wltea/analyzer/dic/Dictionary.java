@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Dictionary.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package org.wltea.analyzer.dic;
 
@@ -13,26 +14,37 @@ import java.util.List;
 import org.wltea.analyzer.cfg.Configuration;
 
 /**
- * IK Analyzer v3.2
- * 词典管理类,单子模式
- * @author 林良益
+ * The Class Dictionary.
  *
+ * @author l.xue.nong
  */
 public class Dictionary {
 	/*
 	 * 分词器默认字典路径 
 	 */
+	/** The Constant PATH_DIC_MAIN. */
 	public static final String PATH_DIC_MAIN = "/org/wltea/analyzer/dic/main.dic";
+	
+	/** The Constant PATH_DIC_SURNAME. */
 	public static final String PATH_DIC_SURNAME = "/org/wltea/analyzer/dic/surname.dic";
+	
+	/** The Constant PATH_DIC_QUANTIFIER. */
 	public static final String PATH_DIC_QUANTIFIER = "/org/wltea/analyzer/dic/quantifier.dic";
+	
+	/** The Constant PATH_DIC_SUFFIX. */
 	public static final String PATH_DIC_SUFFIX = "/org/wltea/analyzer/dic/suffix.dic";
+	
+	/** The Constant PATH_DIC_PREP. */
 	public static final String PATH_DIC_PREP = "/org/wltea/analyzer/dic/preposition.dic";
+	
+	/** The Constant PATH_DIC_STOP. */
 	public static final String PATH_DIC_STOP = "/org/wltea/analyzer/dic/stopword.dic";
 	
 	
 	/*
 	 * 词典单子实例
 	 */
+	/** The Constant singleton. */
 	private static final Dictionary singleton;
 	
 	/*
@@ -45,28 +57,37 @@ public class Dictionary {
 	/*
 	 * 主词典对象
 	 */
+	/** The _ main dict. */
 	private DictSegment _MainDict;
 	/*
 	 * 姓氏词典
 	 */
+	/** The _ surname dict. */
 	private DictSegment _SurnameDict;
 	/*
 	 * 量词词典
 	 */
+	/** The _ quantifier dict. */
 	private DictSegment _QuantifierDict;
 	/*
 	 * 后缀词典
 	 */
+	/** The _ suffix dict. */
 	private DictSegment _SuffixDict;
 	/*
 	 * 副词，介词词典
 	 */
+	/** The _ prep dict. */
 	private DictSegment _PrepDict;
 	/*
 	 * 停止词集合
 	 */
+	/** The _ stop words. */
 	private DictSegment _StopWords;
 	
+	/**
+	 * Instantiates a new dictionary.
+	 */
 	private Dictionary(){
 		//初始化系统词典
 		loadMainDict();
@@ -78,7 +99,7 @@ public class Dictionary {
 	}
 
 	/**
-	 * 加载主词典及扩展词典
+	 * Load main dict.
 	 */
 	private void loadMainDict(){
 		//建立一个主词典实例
@@ -155,7 +176,7 @@ public class Dictionary {
 	}	
 	
 	/**
-	 * 加载姓氏词典
+	 * Load surname dict.
 	 */
 	private void loadSurnameDict(){
 		//建立一个姓氏词典实例
@@ -192,7 +213,7 @@ public class Dictionary {
 	}
 	
 	/**
-	 * 加载量词词典
+	 * Load quantifier dict.
 	 */
 	private void loadQuantifierDict(){
 		//建立一个量词典实例
@@ -229,7 +250,7 @@ public class Dictionary {
 	}
 	
 	/**
-	 * 加载后缀词典
+	 * Load suffix dict.
 	 */
 	private void loadSuffixDict(){
 		//建立一个后缀词典实例
@@ -266,7 +287,7 @@ public class Dictionary {
 	}			
 
 	/**
-	 * 加载介词\副词词典
+	 * Load prep dict.
 	 */
 	private void loadPrepDict(){
 		//建立一个介词\副词词典实例
@@ -304,7 +325,7 @@ public class Dictionary {
 	}
 	
 	/**
-	 * 加载停止词词典
+	 * Load stop word dict.
 	 */
 	private void loadStopWordDict(){
 		//建立一个停止词典实例
@@ -381,21 +402,18 @@ public class Dictionary {
 	}			
 	
 	/**
-	 * 词典初始化
-	 * 由于IK Analyzer的词典采用Dictionary类的静态方法进行词典初始化
-	 * 只有当Dictionary类被实际调用时，才会开始载入词典，
-	 * 这将延长首次分词操作的时间
-	 * 该方法提供了一个在应用加载阶段就初始化字典的手段
-	 * 用来缩短首次分词时的时延
-	 * @return Dictionary
+	 * Gets the single instance of Dictionary.
+	 *
+	 * @return single instance of Dictionary
 	 */
 	public static Dictionary getInstance(){
 		return Dictionary.singleton;
 	}
 	
 	/**
-	 * 加载扩展的词条
-	 * @param extWords Collection<String>词条列表
+	 * Load extend words.
+	 *
+	 * @param extWords the ext words
 	 */
 	public static void loadExtendWords(Collection<String> extWords){
 		if(extWords != null){
@@ -409,8 +427,9 @@ public class Dictionary {
 	}
 	
 	/**
-	 * 加载扩展的停止词条
-	 * @param extStopWords Collection<String>词条列表
+	 * Load extend stop words.
+	 *
+	 * @param extStopWords the ext stop words
 	 */
 	public static void loadExtendStopWords(Collection<String> extStopWords){
 		if(extStopWords != null){
@@ -424,32 +443,34 @@ public class Dictionary {
 	}
 	
 	/**
-	 * 检索匹配主词典
-	 * @param charArray
-	 * @return Hit 匹配结果描述
+	 * Match in main dict.
+	 *
+	 * @param charArray the char array
+	 * @return the hit
 	 */
 	public static Hit matchInMainDict(char[] charArray){
 		return singleton._MainDict.match(charArray);
 	}
 	
 	/**
-	 * 检索匹配主词典
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 匹配结果描述
+	 * Match in main dict.
+	 *
+	 * @param charArray the char array
+	 * @param begin the begin
+	 * @param length the length
+	 * @return the hit
 	 */
 	public static Hit matchInMainDict(char[] charArray , int begin, int length){
 		return singleton._MainDict.match(charArray, begin, length);
 	}
 	
 	/**
-	 * 检索匹配主词典,
-	 * 从已匹配的Hit中直接取出DictSegment，继续向下匹配
-	 * @param charArray
-	 * @param currentIndex
-	 * @param matchedHit
-	 * @return Hit
+	 * Match with hit.
+	 *
+	 * @param charArray the char array
+	 * @param currentIndex the current index
+	 * @param matchedHit the matched hit
+	 * @return the hit
 	 */
 	public static Hit matchWithHit(char[] charArray , int currentIndex , Hit matchedHit){
 		DictSegment ds = matchedHit.getMatchedDictSegment();
@@ -457,11 +478,12 @@ public class Dictionary {
 	}
 
 	/**
-	 * 检索匹配姓氏词典
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 匹配结果描述
+	 * Match in surname dict.
+	 *
+	 * @param charArray the char array
+	 * @param begin the begin
+	 * @param length the length
+	 * @return the hit
 	 */
 	public static Hit matchInSurnameDict(char[] charArray , int begin, int length){
 		return singleton._SurnameDict.match(charArray, begin, length);
@@ -488,22 +510,24 @@ public class Dictionary {
 //	}
 	
 	/**
-	 * 检索匹配量词词典
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 匹配结果描述
-	 */
+ * Match in quantifier dict.
+ *
+ * @param charArray the char array
+ * @param begin the begin
+ * @param length the length
+ * @return the hit
+ */
 	public static Hit matchInQuantifierDict(char[] charArray , int begin, int length){
 		return singleton._QuantifierDict.match(charArray, begin, length);
 	}
 	
 	/**
-	 * 检索匹配在后缀词典
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 匹配结果描述
+	 * Match in suffix dict.
+	 *
+	 * @param charArray the char array
+	 * @param begin the begin
+	 * @param length the length
+	 * @return the hit
 	 */
 	public static Hit matchInSuffixDict(char[] charArray , int begin, int length){
 		return singleton._SuffixDict.match(charArray, begin, length);
@@ -531,22 +555,24 @@ public class Dictionary {
 //	}
 	
 	/**
-	 * 检索匹配介词、副词词典
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return  Hit 匹配结果描述
-	 */
+ * Match in prep dict.
+ *
+ * @param charArray the char array
+ * @param begin the begin
+ * @param length the length
+ * @return the hit
+ */
 	public static Hit matchInPrepDict(char[] charArray , int begin, int length){
 		return singleton._PrepDict.match(charArray, begin, length);
 	}
 	
 	/**
-	 * 判断是否是停止词
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return boolean
+	 * Checks if is stop word.
+	 *
+	 * @param charArray the char array
+	 * @param begin the begin
+	 * @param length the length
+	 * @return true, if is stop word
 	 */
 	public static boolean isStopWord(char[] charArray , int begin, int length){			
 		return singleton._StopWords.match(charArray, begin, length).isMatch();

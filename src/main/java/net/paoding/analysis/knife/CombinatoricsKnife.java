@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer CombinatoricsKnife.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
@@ -21,30 +10,38 @@ import net.paoding.analysis.dictionary.Dictionary;
 import net.paoding.analysis.dictionary.Hit;
 
 /**
- * 排列组合Knife。
- * <p>
- * 
- * 该Knife把遇到的非LIMIT字符视为一个单词分出。<br>
- * 同时如果有以该词语开头的字符串在x-for-combinatorics.dic出现也会切出
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.0
- * 
+ * The Class CombinatoricsKnife.
+ *
+ * @author l.xue.nong
  */
 public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 
+	/** The combinatorics dictionary. */
 	protected Dictionary combinatoricsDictionary;
 
+	/** The noise table. */
 	protected HashSet/* <String> */noiseTable;
 
+	/**
+	 * Instantiates a new combinatorics knife.
+	 */
 	public CombinatoricsKnife() {
 	}
 
+	/**
+	 * Instantiates a new combinatorics knife.
+	 *
+	 * @param noiseWords the noise words
+	 */
 	public CombinatoricsKnife(String[] noiseWords) {
 		setNoiseWords(noiseWords);
 	}
 
+	/**
+	 * Sets the noise words.
+	 *
+	 * @param noiseWords the new noise words
+	 */
 	public void setNoiseWords(String[] noiseWords) {
 		noiseTable = new HashSet/* <String> */((int) (noiseWords.length * 1.5));
 		for (int i = 0; i < noiseWords.length; i++) {
@@ -52,10 +49,16 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.DictionariesWare#setDictionaries(net.paoding.analysis.knife.Dictionaries)
+	 */
 	public void setDictionaries(Dictionaries dictionaries) {
 		combinatoricsDictionary = dictionaries.getCombinatoricsDictionary();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.Knife#dissect(net.paoding.analysis.knife.Collector, net.paoding.analysis.knife.Beef, int)
+	 */
 	public int dissect(Collector collector, Beef beef, int offset) {
 		// 当point == -1时表示本次分解没有遇到POINT性质的字符；
 		// 如果point != -1，该值表示POINT性质字符的开始位置，
@@ -109,20 +112,15 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 通知收集从offset到第一个LIMIT字符的词，并投票下一个Knife开始的分词位置。如果不存在POINT字符，则Point的值为-1。
-	 * <p>
-	 * 
-	 * 默认方法实现：如果不存在POINT性质的字符，则直接返回不做任何切词处理。
-	 * 
-	 * @param collector
-	 * @param beef
-	 * @param offset
-	 *            本次分解的内容在beef中的开始位置
-	 * @param point
-	 *            本次分解的内容的第一个POINT性质字符的位置，-1表示不存在该性质的字符
-	 * @param limit
-	 *            本次分解的内容的LIMIT性质字符
-	 * @return 投票下一个Knife开始分词的位置；-1表示弃权。默认方法实现：弃权。
+	 * Collect point.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param point the point
+	 * @param limit the limit
+	 * @param dicWordVote the dic word vote
+	 * @return the int
 	 */
 	protected int collectPoint(Collector collector, Beef beef, int offset,
 			int point, int limit, int dicWordVote) {
@@ -133,23 +131,15 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 通知收集从offset到第一个LIMIT字符的词，并投票下一个Knife开始的分词位置。
-	 * <p>
-	 * 
-	 * 默认方法实现：把从offset位置到limit位置止(不包含边界)的字符串视为一个词切出。
-	 * 
-	 * @param collector
-	 * @param beef
-	 * @param offset
-	 *            本次分解的内容在beef中的开始位置
-	 * @param point
-	 *            本次分解的内容的第一个POINT性质字符的位置，-1表示不存在该性质的字符
-	 * @param limit
-	 *            本次分解的内容的LIMIT性质字符
-	 * 
-	 * @param dicWordVote 
-	 * 
-	 * @return 投票下一个Knife开始分词的位置；-1表示弃权。默认方法实现：弃权。
+	 * Collect limit.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param point the point
+	 * @param limit the limit
+	 * @param dicWordVote the dic word vote
+	 * @return the int
 	 */
 	protected int collectLimit(Collector collector, Beef beef, int offset,
 			int point, int limit, int dicWordVote) {
@@ -160,22 +150,13 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 尝试从combinatorics字典中检索，如果存在以offset到limit位置止(不包含limit边界)字符串开始的词语，则切出该词语。
-	 * <p>
-	 * 如没有检索到这样的词语，则本方法返回-1弃权投票下一个Knife的开始分解位置。<br>
-	 * 如果检索到这样的词语，在切出在词语的同时，投票返回这个词语的结束位置(词语本身不包含该结束位置的字符)
-	 * <p>
-	 * 
-	 * (for version 2.0.4+):<br>
-	 * 本方法目前存在的局限：<br>
-	 * 如果字典中的某个词语刚好分隔在两次beef之中，比如"U"刚好是此次beef的最后字符，而"盘"是下一次beef的第一个字符，<br>
-	 * 这种情况现在 {@link CombinatoricsKnife}还没机制办法识别将之处理为一个词语
-	 * 
-	 * @param collector
-	 * @param beef
-	 * @param offset
-	 * @param limit
-	 * @return
+	 * Try dic word.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @return the int
 	 */
 	protected int tryDicWord(Collector collector, Beef beef, int offset,
 			int limit) {
@@ -205,12 +186,12 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 当Knife决定切出从offset始到end位置止(不包含结束位置的字符)的词语时，本方法能够过滤掉可能是noise的词，使最终不切出。
-	 * 
-	 * @param collector
-	 * @param beef
-	 * @param offset
-	 * @param end
+	 * Collect if not noise.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param end the end
 	 */
 	protected void collectIfNotNoise(Collector collector, Beef beef,
 			int offset, int end) {
@@ -229,13 +210,12 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 
-	 * 当Knife决定切出从offset始到end位置止(不包含结束位置的字符)的词语时，本方法直接调用{@link #doCollect(Collector, String, Beef, int, int)}切出词语(而不过滤noise词汇)
-	 * 
-	 * @param collector
-	 * @param beef
-	 * @param offset
-	 * @param end
+	 * Collect.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param end the end
 	 */
 	protected void collect(Collector collector, Beef beef, int offset, int end) {
 		String word = beef.subSequence(offset, end).toString();
@@ -243,15 +223,13 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 收集分解出的候选词语。 默认实现是将该候选词语通知给收集器collector。<br>
-	 * 子类覆盖本方法可以更灵活地控制词语的收录，例如控制仅当word满足一些额外条件再决定是否收集，<br>
-	 * 或依上下文环境收集更多的相关词语
-	 * 
-	 * @param collector
-	 * @param word
-	 * @param beef
-	 * @param offset
-	 * @param end
+	 * Do collect.
+	 *
+	 * @param collector the collector
+	 * @param word the word
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param end the end
 	 */
 	protected void doCollect(Collector collector, String word, Beef beef,
 			int offset, int end) {
@@ -259,22 +237,16 @@ public abstract class CombinatoricsKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 根据字符串性质位置，以及分词结果投票，决出下一个Knife应该从哪一个位置开始探测切词
-	 * 
-	 * @param beef
-	 * @param offset
-	 *            本次分词的开始位置
-	 * @param point
-	 *            本次分词的第一个POINT性质的字符位置，-1表示没有该性质的字符
-	 * @param limit
-	 *            本次分词的第一个LIMIT性质的字符位置
-	 * @param pointVote
-	 *            收集从offset到第一个POINT性质字符词汇时的投票，-1表示弃权
-	 * @param limitVote
-	 *            收集从offset到第一个LIMIT性质字符词汇时的投票，-1表示弃权
-	 * @param dicWordVote
-	 *            收集combinatorics词典词语时的投票，-1表示弃权
-	 * @return
+	 * Next offset.
+	 *
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param point the point
+	 * @param limit the limit
+	 * @param pointVote the point vote
+	 * @param limitVote the limit vote
+	 * @param dicWordVote the dic word vote
+	 * @return the int
 	 */
 	protected int nextOffset(Beef beef, int offset, int point, int limit,
 			int pointVote, int limitVote, int dicWordVote) {

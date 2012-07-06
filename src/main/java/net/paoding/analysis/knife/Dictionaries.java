@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Dictionaries.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
@@ -19,62 +8,64 @@ import net.paoding.analysis.dictionary.Dictionary;
 import net.paoding.analysis.dictionary.support.detection.DifferenceListener;
 
 /**
- * 中文字典缓存根据地,为{@link CJKKnife}所用。<br>
- * 从本对象可以获取中文需要的相关字典。包括词汇表、姓氏表、计量单位表、忽略的词或单字等。
- * <p>
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @see CJKKnife
- * 
- * @since 1.0
+ * The Interface Dictionaries.
+ *
+ * @author l.xue.nong
  */
 public interface Dictionaries {
+	
 	/**
-	 * 词汇表字典
-	 * 
-	 * @return
+	 * Gets the vocabulary dictionary.
+	 *
+	 * @return the vocabulary dictionary
 	 */
 	public Dictionary getVocabularyDictionary();
 
 	/**
-	 * 姓氏字典
-	 * 
-	 * @return
+	 * Gets the confucian family names dictionary.
+	 *
+	 * @return the confucian family names dictionary
 	 */
 	public Dictionary getConfucianFamilyNamesDictionary();
 
 	/**
-	 * 忽略的词语
-	 * 
-	 * @return
+	 * Gets the noise charactors dictionary.
+	 *
+	 * @return the noise charactors dictionary
 	 */
 	public Dictionary getNoiseCharactorsDictionary();
 
 	/**
-	 * 忽略的单字
-	 * 
-	 * @return
+	 * Gets the noise words dictionary.
+	 *
+	 * @return the noise words dictionary
 	 */
 	public Dictionary getNoiseWordsDictionary();
 
 	/**
-	 * 计量单位
-	 * 
-	 * @return
+	 * Gets the units dictionary.
+	 *
+	 * @return the units dictionary
 	 */
 	public Dictionary getUnitsDictionary();
 	
 	/**
-	 * lantin+cjk, num+cjk
-	 * @return
+	 * Gets the combinatorics dictionary.
+	 *
+	 * @return the combinatorics dictionary
 	 */
 	public Dictionary getCombinatoricsDictionary();
 	
 	/**
-	 * 
-	 * @param l
+	 * Start detecting.
+	 *
+	 * @param interval the interval
+	 * @param l the l
 	 */
 	public void startDetecting(int interval, DifferenceListener l);
+	
+	/**
+	 * Stop detecting.
+	 */
 	public void stopDetecting();
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
- * Info:restart-analyzer IkRestartAnalyzer.java 2012-7-4 13:56:03 l.xue.nong$$
+ * Info:rebirth-analyzer IkrebirthAnalyzer.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package cn.com.rebirth.analyzer.support;
 
@@ -8,46 +8,47 @@ import org.apache.lucene.analysis.Analyzer;
 import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-import cn.com.rebirth.analyzer.AbstractRestartAnalyzer;
+import cn.com.rebirth.analyzer.AbstractRebirthAnalyzer;
 import cn.com.rebirth.analyzer.InitializationAnalyzer;
-import cn.com.rebirth.analyzer.RestartAnalyzers;
+import cn.com.rebirth.analyzer.RebirthAnalyzers;
 import cn.com.rebirth.commons.StopWatch;
 
 /**
- * The Class IkRestartAnalyzer.
+ * The Class IkrebirthAnalyzer.
  *
  * @author l.xue.nong
  */
-public final class IkRestartAnalyzer extends AbstractRestartAnalyzer implements RestartAnalyzers,
+public final class IkRebirthAnalyzer extends AbstractRebirthAnalyzer implements RebirthAnalyzers,
 		InitializationAnalyzer {
-	/** The Constant PAODING_NAME. */
-	public static final String IMPL_ANALYZER_NAME = "RestartAnalyzer-Impl-Ik";
+	
+	/** The Constant IMPL_ANALYZER_NAME. */
+	public static final String IMPL_ANALYZER_NAME = "rebirthAnalyzer-Impl-Ik";
 
-	/** The Constant PAODING_VERSION. */
+	/** The Constant IMPL_ANALYZER_VERSION. */
 	public static final String IMPL_ANALYZER_VERSION = "3.2.3";
 
 	/**
-	 * Instantiates a new ik restart analyzer.
+	 * Instantiates a new ik rebirth analyzer.
 	 *
 	 * @param analyzer the analyzer
 	 */
-	public IkRestartAnalyzer(Analyzer analyzer) {
+	public IkRebirthAnalyzer(Analyzer analyzer) {
 		super(analyzer);
 	}
 
 	/**
-	 * Instantiates a new ik restart analyzer.
+	 * Instantiates a new ik rebirth analyzer.
 	 */
-	public IkRestartAnalyzer() {
+	public IkRebirthAnalyzer() {
 		this(new IKAnalyzer());
 	}
 
 	/**
-	 * Instantiates a new ik restart analyzer.
+	 * Instantiates a new ik rebirth analyzer.
 	 *
 	 * @param isMaxWordLength the is max word length
 	 */
-	public IkRestartAnalyzer(boolean isMaxWordLength) {
+	public IkRebirthAnalyzer(boolean isMaxWordLength) {
 		this(new IKAnalyzer(isMaxWordLength));
 	}
 
@@ -55,7 +56,7 @@ public final class IkRestartAnalyzer extends AbstractRestartAnalyzer implements 
 	private static final long serialVersionUID = -3574504142224792506L;
 
 	/* (non-Javadoc)
-	 * @see cn.com.restart.analyzer.RestartAnalyzers#getAnalyzerImplName()
+	 * @see cn.com.rebirth.analyzer.rebirthAnalyzers#getAnalyzerImplName()
 	 */
 	@Override
 	public String getAnalyzerImplName() {
@@ -63,18 +64,24 @@ public final class IkRestartAnalyzer extends AbstractRestartAnalyzer implements 
 	}
 
 	/* (non-Javadoc)
-	 * @see cn.com.restart.analyzer.RestartAnalyzers#getAnalyzerImplVersion()
+	 * @see cn.com.rebirth.analyzer.rebirthAnalyzers#getAnalyzerImplVersion()
 	 */
 	@Override
 	public String getAnalyzerImplVersion() {
 		return IMPL_ANALYZER_VERSION;
 	}
 
+	/* (non-Javadoc)
+	 * @see cn.com.rebirth.analyzer.InitializationAnalyzer#beforeInit()
+	 */
 	@Override
 	public void beforeInit() {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see cn.com.rebirth.analyzer.InitializationAnalyzer#afterInit()
+	 */
 	@Override
 	public void afterInit() {
 		StopWatch stopWatch = new StopWatch();

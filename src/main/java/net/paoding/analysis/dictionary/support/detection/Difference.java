@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Difference.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.dictionary.support.detection;
 
@@ -20,82 +9,129 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 2.0.2
- * 
+ * The Class Difference.
+ *
+ * @author l.xue.nong
  */
 public class Difference {
 
-	/**
-	 * 变更了的
-	 * 
-	 * @return
-	 */
+	/** The modified. */
 	private List/* <Node> */modified = new LinkedList/* <Node> */();
 
-	/**
-	 * 删除了的
-	 * 
-	 * @return
-	 */
+	/** The deleted. */
 	private List/* <Node> */deleted = new LinkedList/* <Node> */();
 
-	/**
-	 * 新加的
-	 * 
-	 * @return
-	 */
+	/** The newcome. */
 	private List/* <Node> */newcome = new LinkedList/* <Node> */();
 
+	/** The older. */
 	private Snapshot older;
+	
+	/** The younger. */
 	private Snapshot younger;
 
+	/**
+	 * Gets the modified.
+	 *
+	 * @return the modified
+	 */
 	public List/* <Node> */getModified() {
 		return modified;
 	}
 
+	/**
+	 * Sets the modified.
+	 *
+	 * @param modified the new modified
+	 */
 	public void setModified(List/* <Node> */modified) {
 		this.modified = modified;
 	}
 
+	/**
+	 * Gets the deleted.
+	 *
+	 * @return the deleted
+	 */
 	public List/* <Node> */getDeleted() {
 		return deleted;
 	}
 
+	/**
+	 * Sets the deleted.
+	 *
+	 * @param deleted the new deleted
+	 */
 	public void setDeleted(List/* <Node> */deleted) {
 		this.deleted = deleted;
 	}
 
+	/**
+	 * Gets the newcome.
+	 *
+	 * @return the newcome
+	 */
 	public List/* <Node> */getNewcome() {
 		return newcome;
 	}
 
+	/**
+	 * Sets the newcome.
+	 *
+	 * @param newcome the new newcome
+	 */
 	public void setNewcome(List/* <Node> */newcome) {
 		this.newcome = newcome;
 	}
 
+	/**
+	 * Gets the older.
+	 *
+	 * @return the older
+	 */
 	public Snapshot getOlder() {
 		return older;
 	}
 
+	/**
+	 * Sets the older.
+	 *
+	 * @param older the new older
+	 */
 	public void setOlder(Snapshot older) {
 		this.older = older;
 	}
 
+	/**
+	 * Gets the younger.
+	 *
+	 * @return the younger
+	 */
 	public Snapshot getYounger() {
 		return younger;
 	}
 
+	/**
+	 * Sets the younger.
+	 *
+	 * @param younger the new younger
+	 */
 	public void setYounger(Snapshot younger) {
 		this.younger = younger;
 	}
 
+	/**
+	 * Checks if is empty.
+	 *
+	 * @return true, if is empty
+	 */
 	public boolean isEmpty() {
 		return deleted.isEmpty() && modified.isEmpty() && newcome.isEmpty();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		String smodified = ArraysToString(modified.toArray(new Node[] {}));
 		String snewcome = ArraysToString(newcome.toArray(new Node[] {}));
@@ -105,6 +141,12 @@ public class Difference {
 	}
 
 	// 低于JDK1.5无Arrays.toString()方法，故有以下方法
+	/**
+	 * Arrays to string.
+	 *
+	 * @param a the a
+	 * @return the string
+	 */
 	private static String ArraysToString(Object[] a) {
 		if (a == null)
 			return "null";

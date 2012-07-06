@@ -1,67 +1,38 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Beef.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
 /**
- * {@link Beef}是要被庖丁“解”的“牛骨肉”，是对文本字符流的高效封装，可以从中读取指定位置的字符。
- * <p>
- * {@link Beef}和{@link String}对象的不同之处在于：<br>
- * {@link Beef}共享输入的char数组，{@link String}的策略是对共享数组进行克隆，克隆损耗了性能。<br>
- * 同时，{@link Beef}在 {@link #charAt(int)}方法还进行对字符的预处理，使返回时符合规则:1)toLowerCase
- * 2)全角转半角等
- * <p>
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.0
- * 
+ * The Class Beef.
+ *
+ * @author l.xue.nong
  */
 public class Beef implements CharSequence {
 
 	// -------------------------------------------------
 
-	/**
-	 * 文本字符数组
-	 */
+	/** The value. */
 	private final char[] value;
 
-	/**
-	 * 字符开始位置，即charAt(i)返回value[offset+i]字符
-	 */
+	/** The offset. */
 	private int offset;
 
-	/**
-	 * 从offset位置开始的字符数
-	 */
+	/** The count. */
 	private int count;
 
-	/** Cache the hash code for the beef */
+	/** The hash. */
 	private int hash; // Default to 0
 
 	// -------------------------------------------------
 
 	/**
-	 * 构造函数
-	 * 
-	 * @param body
-	 *            被本对象中直接拥有的文本字符数组
-	 * @param offset
-	 *            字符开始位置，即get(i)返回body[offset+i]字符
-	 * @param count
-	 *            从offset位置开始的字符数
+	 * Instantiates a new beef.
+	 *
+	 * @param value the value
+	 * @param offset the offset
+	 * @param count the count
 	 */
 	public Beef(char[] value, int offset, int count) {
 		this.value = value;
@@ -70,6 +41,12 @@ public class Beef implements CharSequence {
 
 	// -------------------------------------------------
 
+	/**
+	 * Sets the.
+	 *
+	 * @param offset the offset
+	 * @param count the count
+	 */
 	public void set(int offset, int count) {
         if (offset < 0) {
             throw new StringIndexOutOfBoundsException(offset);
@@ -84,23 +61,38 @@ public class Beef implements CharSequence {
 		this.count = count;
 	}
 
+	/**
+	 * Gets the value.
+	 *
+	 * @return the value
+	 */
 	public char[] getValue() {
 		return value;
 	}
 
 
+	/**
+	 * Gets the count.
+	 *
+	 * @return the count
+	 */
 	public int getCount() {
 		return count;
 	}
 
+	/**
+	 * Gets the offset.
+	 *
+	 * @return the offset
+	 */
 	public int getOffset() {
 		return offset;
 	}
 
 	// -------------------------------------------------
 	
-	/**
-	 * 获取指定位置的字符。返回之前将被预处理：1)toLowerCase，2)全角转半角等
+	/* (non-Javadoc)
+	 * @see java.lang.CharSequence#charAt(int)
 	 */
 	public char charAt(int index) {
 		if (index >= 0 && index < count) {
@@ -121,20 +113,32 @@ public class Beef implements CharSequence {
 		return (char) -1;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.CharSequence#length()
+	 */
 	public int length() {
 		return count;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.CharSequence#subSequence(int, int)
+	 */
 	public CharSequence subSequence(int start, int end) {
 		return new String(value, offset + start, end - start);
 	}
 
 	// -------------------------------------------------
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return new String(value, offset, count);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	public int hashCode() {
 		int h = hash;
 		if (h == 0) {

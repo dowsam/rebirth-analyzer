@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
- * Info:summall-analyzer AbstractSimilarity.java 2012-2-17 13:38:18 l.xue.nong$$
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer AbstractSimilarity.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package cn.com.rebirth.analyzer;
 

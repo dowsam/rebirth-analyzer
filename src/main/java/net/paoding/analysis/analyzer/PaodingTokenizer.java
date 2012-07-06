@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer PaodingTokenizer.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.analyzer;
 
@@ -32,94 +21,58 @@ import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 
 /**
- * PaodingTokenizer是基于“庖丁解牛”框架的TokenStream实现，为PaodingAnalyzer使用。
- * <p>
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @see Beef
- * @see Knife
- * @see Paoding
- * @see Tokenizer
- * @see PaodingAnalyzer
- * 
- * @see Collector
- * @see TokenCollector
- * @see MAxTokenCollector
- * @see MostWordsTokenCollector
- * 
- * @since 1.0
+ * The Class PaodingTokenizer.
+ *
+ * @author l.xue.nong
  */
 public final class PaodingTokenizer extends Tokenizer implements Collector {
 
 	// -------------------------------------------------
 
-	/**
-	 * 从input读入的总字符数
-	 */
+	/** The input length. */
 	private int inputLength;
 
-	/**
-	 * 
-	 */
+	/** The Constant bufferLength. */
 	private static final int bufferLength = 128;
 
-	/**
-	 * 接收来自{@link #input}的文本字符
-	 * 
-	 * @see #next()
-	 */
+	/** The buffer. */
 	private final char[] buffer = new char[bufferLength];
 
-	/**
-	 * {@link buffer}[0]在{@link #input}中的偏移
-	 * 
-	 * @see #collect(String, int, int)
-	 * @see #next()
-	 */
+	/** The offset. */
 	private int offset;
 
-	/**
-	 * 
-	 */
+	/** The beef. */
 	private final Beef beef = new Beef(buffer, 0, 0);
 
-	/**
-	 * 
-	 */
+	/** The dissected. */
 	private int dissected;
 
-	/**
-	 * 用于分解beef中的文本字符，由PaodingAnalyzer提供
-	 * 
-	 * @see #next()
-	 */
+	/** The knife. */
 	private Knife knife;
 
-	/**
-	 * 
-	 */
+	/** The token collector. */
 	private TokenCollector tokenCollector;
 
-	/**
-	 * tokens迭代器，用于next()方法顺序读取tokens中的Token对象
-	 * 
-	 * @see #tokens
-	 * @see #next()
-	 */
+	/** The token iteractor. */
 	private Iterator<Token> tokenIteractor;
 
+	/** The term att. */
 	private TermAttribute termAtt;
+	
+	/** The offset att. */
 	private OffsetAttribute offsetAtt;
+	
+	/** The type att. */
 	private TypeAttribute typeAtt;
 
 	// -------------------------------------------------
 
 	/**
-	 * 
-	 * @param input
-	 * @param knife
-	 * @param tokenCollector
+	 * Instantiates a new paoding tokenizer.
+	 *
+	 * @param input the input
+	 * @param knife the knife
+	 * @param tokenCollector the token collector
 	 */
 	public PaodingTokenizer(Reader input, Knife knife,
 			TokenCollector tokenCollector) {
@@ -129,6 +82,9 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 		init();
 	}
 
+	/**
+	 * Inits the.
+	 */
 	private void init() {
 		termAtt = addAttribute(TermAttribute.class);
 		offsetAtt = addAttribute(OffsetAttribute.class);
@@ -137,25 +93,46 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 
 	// -------------------------------------------------
 
+	/**
+	 * Gets the token collector.
+	 *
+	 * @return the token collector
+	 */
 	public TokenCollector getTokenCollector() {
 		return tokenCollector;
 	}
 
+	/**
+	 * Sets the token collector.
+	 *
+	 * @param tokenCollector the new token collector
+	 */
 	public void setTokenCollector(TokenCollector tokenCollector) {
 		this.tokenCollector = tokenCollector;
 	}
 
 	// -------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.Collector#collect(java.lang.String, int, int)
+	 */
 	public void collect(String word, int offset, int end) {
 		tokenCollector.collect(word, this.offset + offset, this.offset + end);
 	}
 
 	// -------------------------------------------------
+	/**
+	 * Gets the input length.
+	 *
+	 * @return the input length
+	 */
 	public int getInputLength() {
 		return inputLength;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.lucene.analysis.TokenStream#incrementToken()
+	 */
 	@Override
 	public boolean incrementToken() throws IOException {
 		// 已经穷尽tokensIteractor的Token对象，则继续请求reader流入数据
@@ -202,6 +179,9 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.apache.lucene.analysis.TokenStream#reset()
+	 */
 	@Override
 	public void reset() throws IOException {
 		super.reset();
@@ -209,6 +189,9 @@ public final class PaodingTokenizer extends Tokenizer implements Collector {
 		inputLength = 0;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.apache.lucene.analysis.Tokenizer#reset(java.io.Reader)
+	 */
 	@Override
 	public void reset(Reader input) throws IOException {
 		super.reset(input);

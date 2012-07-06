@@ -1,21 +1,21 @@
 /*
- * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
- * Info:summall-analyzer SumMallSimilarity.java 2012-2-17 13:45:44 l.xue.nong$$
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer rebirthSimilarity.java 2012-7-6 10:33:32 l.xue.nong$$
  */
 package cn.com.rebirth.analyzer;
 
 /**
- * The Class SumMallSimilarity.
+ * The Class rebirthSimilarity.
  *
  * @author l.xue.nong
  */
-public class RestartSimilarity extends AbstractSimilarity {
+public class RebirthSimilarity extends AbstractSimilarity {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2398392974218448263L;
 
 	/* (non-Javadoc)
-	 * @see cn.com.summall.analyzer.AbstractSimilarity#similarity(int, int)
+	 * @see cn.com.rebirth.analyzer.AbstractSimilarity#similarity(int, int)
 	 */
 	@Override
 	public float similarity(int overlap, int maxOverlap) {

@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Snapshot.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.dictionary.support.detection;
 
@@ -25,42 +14,68 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 2.0.2
- * 
+ * The Class Snapshot.
+ *
+ * @author l.xue.nong
  */
 public class Snapshot {
 
 	// 此次快照版本，使用时间表示
+	/** The version. */
 	private long version;
 
 	// 根地址，绝对地址，使用/作为目录分隔符
+	/** The root. */
 	private String root;
 
 	// String为相对根的地址，使用/作为目录分隔符
+	/** The nodes map. */
 	private Map/*<String, InnerNode>*/ nodesMap = new HashMap/*<String, InnerNode>*/();
 
 	//
+	/** The nodes. */
 	private InnerNode[] nodes;
 	
 	//checksum of this snapshot
+	/** The checksum. */
 	private String checksum;
 
+	/**
+	 * Instantiates a new snapshot.
+	 */
 	private Snapshot() {
 	}
 
+	/**
+	 * Flash.
+	 *
+	 * @param root the root
+	 * @param filter the filter
+	 * @return the snapshot
+	 */
 	public static Snapshot flash(String root, FileFilter filter) {
 		return flash(new File(root), filter);
 	}
 	
+	/**
+	 * Flash.
+	 *
+	 * @param rootFile the root file
+	 * @param filter the filter
+	 * @return the snapshot
+	 */
 	public static Snapshot flash(File rootFile, FileFilter filter) {
 		Snapshot snapshot = new Snapshot();
 		snapshot.implFlash(rootFile, filter);
 		return snapshot;
 	}
 	
+	/**
+	 * Impl flash.
+	 *
+	 * @param rootFile the root file
+	 * @param filter the filter
+	 */
 	private void implFlash(File rootFile, FileFilter filter) {
 		version = System.currentTimeMillis();
 		root = rootFile.getAbsolutePath().replace('\\', '/');
@@ -100,9 +115,7 @@ public class Snapshot {
 	}
 	
 	/**
-	 * build checksum of snapshot
-	 * 
-	 * @return checksum of current snapshot
+	 * Builds the check sum.
 	 */
 	private void buildCheckSum() {
 		short checksum = -631;
@@ -128,28 +141,59 @@ public class Snapshot {
 		this.checksum = String.valueOf(checksum);
 	}
 
+	/**
+	 * Gets the version.
+	 *
+	 * @return the version
+	 */
 	public long getVersion() {
 		return version;
 	}
 
+	/**
+	 * Sets the version.
+	 *
+	 * @param version the new version
+	 */
 	public void setVersion(long version) {
 		this.version = version;
 	}
 
+	/**
+	 * Gets the root.
+	 *
+	 * @return the root
+	 */
 	public String getRoot() {
 		return root;
 	}
 
+	/**
+	 * Sets the root.
+	 *
+	 * @param root the new root
+	 */
 	public void setRoot(String root) {
 		this.root = root;
 	}
 
 	//get checksum in lazy mode
+	/**
+	 * Gets the check sum.
+	 *
+	 * @return the check sum
+	 */
 	public String getCheckSum() {
 		if (checksum == null) buildCheckSum();
 		return checksum;
 	}
 
+	/**
+	 * Diff.
+	 *
+	 * @param that the that
+	 * @return the difference
+	 */
 	public Difference diff(Snapshot that) {
 		Snapshot older = that;
 		Snapshot younger = this;
@@ -183,6 +227,12 @@ public class Snapshot {
 		return diff;
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws InterruptedException the interrupted exception
+	 */
 	public static void main(String[] args) throws InterruptedException {
 		File f = new File("dic");
 		Snapshot snapshot1 = Snapshot.flash(f, null);
@@ -206,6 +256,12 @@ public class Snapshot {
 	
 
 	// 低于JDK1.5无Arrays.toString()方法，故有以下方法
+	/**
+	 * Arrays to string.
+	 *
+	 * @param a the a
+	 * @return the string
+	 */
 	private static String ArraysToString(Object[] a) {
 		if (a == null)
 			return "null";
@@ -225,6 +281,13 @@ public class Snapshot {
 
 	// --------------------------------------------
 
+	/**
+	 * Gets the posterity.
+	 *
+	 * @param root the root
+	 * @param filter the filter
+	 * @return the posterity
+	 */
 	private LinkedList/*<File>*/ getPosterity(File root, FileFilter filter) {
 		ArrayList/*<File>*/ dirs = new ArrayList/*<File>*/();
 		LinkedList/*<File>*/ files = new LinkedList/*<File>*/();
@@ -247,10 +310,22 @@ public class Snapshot {
 		return files;
 	}
 
+	/**
+	 * The Class InnerNode.
+	 *
+	 * @author l.xue.nong
+	 */
 	class InnerNode extends Node {
+		
+		/** The parent. */
 		String parent;
+		
+		/** The last modified. */
 		long lastModified;
 		
+		/* (non-Javadoc)
+		 * @see net.paoding.analysis.dictionary.support.detection.Node#compareTo(net.paoding.analysis.dictionary.support.detection.Node)
+		 */
 		@Override
 		public int compareTo(Node o) {
 			// super compare

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
- * Info:summall-analyzer SumMallAnalyzer.java 2012-2-13 14:32:47 l.xue.nong$$
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer rebirthAnalyzer.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package cn.com.rebirth.analyzer.support;
 
@@ -10,26 +10,27 @@ import java.io.Serializable;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 
-import cn.com.rebirth.analyzer.RestartAnalyzers;
+import cn.com.rebirth.analyzer.RebirthAnalyzers;
 
 /**
- * The Class SumMallAnalyzer.
+ * The Class rebirthAnalyzer.
  *
  * @author l.xue.nong
  */
-public class RestartAnalyzer extends Analyzer implements Serializable {
+public class RebirthAnalyzer extends Analyzer implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2483626063644302654L;
+	
 	/** The mall analyzers. */
-	private final RestartAnalyzers mallAnalyzers;
+	private final RebirthAnalyzers mallAnalyzers;
 
 	/**
-	 * Instantiates a new sum mall analyzer.
+	 * Instantiates a new rebirth analyzer.
 	 *
 	 * @param mallAnalyzers the mall analyzers
 	 */
-	public RestartAnalyzer(RestartAnalyzers mallAnalyzers) {
+	public RebirthAnalyzer(RebirthAnalyzers mallAnalyzers) {
 		super();
 		this.mallAnalyzers = mallAnalyzers;
 	}
@@ -47,7 +48,7 @@ public class RestartAnalyzer extends Analyzer implements Serializable {
 	 *
 	 * @return the mall analyzers
 	 */
-	public RestartAnalyzers getMallAnalyzers() {
+	public RebirthAnalyzers getMallAnalyzers() {
 		return mallAnalyzers;
 	}
 

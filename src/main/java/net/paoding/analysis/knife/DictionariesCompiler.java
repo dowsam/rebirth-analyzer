@@ -1,52 +1,44 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer DictionariesCompiler.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
 
 import java.util.Properties;
+
 /**
- * 
- * @author  Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 2.0.4
+ * The Interface DictionariesCompiler.
+ *
+ * @author l.xue.nong
  */
 public interface DictionariesCompiler {
 
 	/**
-	 * 
-	 * @param p
-	 * @return
-	 * @throws Exception
+	 * Should compile.
+	 *
+	 * @param p the p
+	 * @return true, if successful
+	 * @throws Exception the exception
 	 */
 	public boolean shouldCompile(Properties p) throws Exception;
 	
 	/**
-	 * 
-	 * @param dictionaries
-	 * @param knife
-	 * @param p
-	 * @throws Exception
+	 * Compile.
+	 *
+	 * @param dictionaries the dictionaries
+	 * @param knife the knife
+	 * @param p the p
+	 * @throws Exception the exception
 	 */
 	public void compile(Dictionaries dictionaries, Knife knife, Properties p) throws Exception;
 	
 	/**
-	 * 
-	 * @param p
-	 * @return
-	 * @throws Exception
+	 * Read complied dictionaries.
+	 *
+	 * @param p the p
+	 * @return the dictionaries
+	 * @throws Exception the exception
 	 */
 	public Dictionaries readCompliedDictionaries(Properties p) throws Exception;
 }

@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer QuantifierSegmenter.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package org.wltea.analyzer.seg;
 
@@ -13,14 +14,9 @@ import org.wltea.analyzer.dic.Hit;
 import org.wltea.analyzer.help.CharacterHelper;
 
 /**
- * 数量词子分词器，涵盖一下范围
- * 1.阿拉伯数字，阿拉伯数字+中文量词
- * 2.中文数字+中文量词
- * 3.时间,日期
- * 4.罗马数字
- * 5.数学符号 % . / 
- * @author 林良益
+ * The Class QuantifierSegmenter.
  *
+ * @author l.xue.nong
  */
 public class QuantifierSegmenter implements ISegmenter {
 
@@ -35,9 +31,13 @@ public class QuantifierSegmenter implements ISegmenter {
 //	}
 //	public static final int NC_ANP = 01;	
 	//阿拉伯数字0-9
+	/** The Constant NC_ARABIC. */
 	public static final int NC_ARABIC = 02;
 	//阿拉伯数词链接符号
+	/** The Arabic_ num_ mid. */
 	public static String Arabic_Num_Mid = ",./:Ee";//Amid
+	
+	/** The Arabic num mid chars. */
 	private static Set<Character> ArabicNumMidChars = new HashSet<Character>();
 	static{
 		char[] ca = Arabic_Num_Mid.toCharArray();
@@ -45,16 +45,24 @@ public class QuantifierSegmenter implements ISegmenter {
 			ArabicNumMidChars.add(nChar);
 		}
 	}
+	
+	/** The Constant NC_ANM. */
 	public static final int NC_ANM = 03;
 //	//阿拉伯数词后缀
 //	public static String Arabic_Num_End = "%‰";//Aend
 //	public static final int NC_ANE = 04;
 	
 	//序数词（数词前缀）
-	public static String Num_Pre = "第初";//Cpre
+	/** The Num_ pre. */
+public static String Num_Pre = "第初";//Cpre
+	
+	/** The Constant NC_NP. */
 	public static final int NC_NP = 11;
 	//中文数词
+	/** The Chn_ num. */
 	public static String Chn_Num = "○一二两三四五六七八九十零壹贰叁肆伍陆柒捌玖拾百千万亿拾佰仟萬億兆卅廿";//Cnum
+	
+	/** The Chn number chars. */
 	private static Set<Character> ChnNumberChars = new HashSet<Character>();
 	static{
 		char[] ca = Chn_Num.toCharArray();
@@ -62,13 +70,21 @@ public class QuantifierSegmenter implements ISegmenter {
 			ChnNumberChars.add(nChar);
 		}
 	}
+	
+	/** The Constant NC_CHINESE. */
 	public static final int NC_CHINESE = 12;
 	//中文数词连接符
+	/** The Chn_ num_ mid. */
 	public static String Chn_Num_Mid = "点";//Cmid
+	
+	/** The Constant NC_CNM. */
 	public static final int NC_CNM = 13;
 	
 	//约数词（数词结尾）
+	/** The Num_ end. */
 	public static String Num_End = "几多余半";//Cend
+	
+	/** The Num end chars. */
 	private static Set<Character> NumEndChars = new HashSet<Character>();
 	static{
 		char[] ca = Num_End.toCharArray();
@@ -76,6 +92,8 @@ public class QuantifierSegmenter implements ISegmenter {
 			NumEndChars.add(nChar);
 		}
 	}
+	
+	/** The Constant NC_NE. */
 	public static final int NC_NE = 14;
 	
 //	//GB库中的罗马字符(起始、中间、结束)
@@ -90,9 +108,11 @@ public class QuantifierSegmenter implements ISegmenter {
 //	public static final int NC_ROME = 22;
 
 	//非数词字符
-	public static final int NaN = -99;
+	/** The Constant NaN. */
+public static final int NaN = -99;
 	
 	//所有的可能数词
+	/** The All number chars. */
 	private static Set<Character> AllNumberChars = new HashSet<Character>(256);
 	static{
 		char[] ca = null;
@@ -133,32 +153,41 @@ public class QuantifierSegmenter implements ISegmenter {
 	 * 同时作为子分词器状态标识
 	 * 当start > -1 时，标识当前的分词器正在处理字符
 	 */
+	/** The n start. */
 	private int nStart;
 	/*
 	 * 记录词元结束位置
 	 * end记录的是在词元中最后一个出现的合理的数词结束
 	 */
+	/** The n end. */
 	private int nEnd;
 	/*
 	 * 当前数词的状态 
 	 */
+	/** The n status. */
 	private int nStatus;
 	/*
 	 * 捕获到一个数词
 	 */
+	/** The ca n. */
 	private boolean fCaN;	
 	
 	/*
 	 * 量词起始位置
 	 */
+	/** The count start. */
 	private int countStart;
 	/*
 	 * 量词终止位置
 	 */
+	/** The count end. */
 	private int countEnd;
 	
 
 	
+	/**
+	 * Instantiates a new quantifier segmenter.
+	 */
 	public QuantifierSegmenter(){
 		nStart = -1;
 		nEnd = -1;
@@ -203,9 +232,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 
 	/**
-	 * 数词处理
-	 * @param segmentBuff
-	 * @param context
+	 * Process number.
+	 *
+	 * @param segmentBuff the segment buff
+	 * @param context the context
 	 */
 	private void processNumber(char[] segmentBuff , Context context){		
 		//数词字符识别
@@ -265,9 +295,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 当前为NaN状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * On na n status.
+	 *
+	 * @param inputStatus the input status
+	 * @param context the context
 	 */
 	private void onNaNStatus(int inputStatus ,  Context context){
 		if(NaN == inputStatus){
@@ -324,9 +355,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	
 	
 	/**
-	 * 当前为ANP状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * On arabic status.
+	 *
+	 * @param inputStatus the input status
+	 * @param context the context
 	 */
 //	private void onANPStatus(int inputStatus ,  Context context){
 //		if(NC_ARABIC == inputStatus){//阿拉伯数字
@@ -396,9 +428,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 当前为ANM状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * On anm status.
+	 *
+	 * @param inputStatus the input status
+	 * @param context the context
 	 */
 	private void onANMStatus(int inputStatus ,  Context context){
 		if (NC_ARABIC == inputStatus){//阿拉伯数字
@@ -424,9 +457,10 @@ public class QuantifierSegmenter implements ISegmenter {
 
 	
 	/**
-	 * 当前为ANE状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * On np status.
+	 *
+	 * @param inputStatus the input status
+	 * @param context the context
 	 */
 //	private void onANEStatus(int inputStatus ,  Context context){
 //		//输出可能存在的数词
@@ -478,9 +512,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 当前为CHINESE状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * On chinese status.
+	 *
+	 * @param inputStatus the input status
+	 * @param context the context
 	 */
 	private void onCHINESEStatus(int inputStatus ,  Context context){
 		if(NC_CHINESE == inputStatus){//中文数字
@@ -509,9 +544,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 当前为CNM状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * On cnm status.
+	 *
+	 * @param inputStatus the input status
+	 * @param context the context
 	 */
 	private void onCNMStatus(int inputStatus ,  Context context){
 		if(NC_CHINESE == inputStatus){//中文数字
@@ -538,9 +574,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 当前为CNE状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * On cne status.
+	 *
+	 * @param inputStatus the input status
+	 * @param context the context
 	 */
 	private void onCNEStatus(int inputStatus ,  Context context){
 		//输出可能存在的数词
@@ -553,9 +590,9 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 当前为ROME状态时，状态机的处理(状态转换)
-	 * @param inputStatus
-	 * @param context
+	 * Output num lexeme.
+	 *
+	 * @param context the context
 	 */
 //	private void onROMEStatus(int inputStatus ,  Context context){
 //		if(NC_ROME == inputStatus){//罗马数字
@@ -587,8 +624,9 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 添加量词词元到结果集
-	 * @param context
+	 * Output count lexeme.
+	 *
+	 * @param context the context
 	 */
 	private void outputCountLexeme(Context context){
 		if(countStart > -1 && countEnd > -1){
@@ -600,7 +638,7 @@ public class QuantifierSegmenter implements ISegmenter {
 	}	
 	
 	/**
-	 * 重置数词的状态
+	 * N reset.
 	 */
 	private void nReset(){
 		this.nStart = -1;
@@ -609,9 +647,11 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 	
 	/**
-	 * 识别数字字符类型
-	 * @param input
-	 * @return
+	 * N identify.
+	 *
+	 * @param segmentBuff the segment buff
+	 * @param context the context
+	 * @return the int
 	 */
 	private int nIdentify(char[] segmentBuff , Context context){
 		
@@ -655,9 +695,10 @@ public class QuantifierSegmenter implements ISegmenter {
 	}
 
 	/**
-	 * 处理中文量词
-	 * @param segmentBuff
-	 * @param context
+	 * Process count.
+	 *
+	 * @param segmentBuff the segment buff
+	 * @param context the context
 	 */
 	private void processCount(char[] segmentBuff , Context context){
 		Hit hit = null;
@@ -703,6 +744,9 @@ public class QuantifierSegmenter implements ISegmenter {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.wltea.analyzer.seg.ISegmenter#reset()
+	 */
 	public void reset() {
 		nStart = -1;
 		nEnd = -1;

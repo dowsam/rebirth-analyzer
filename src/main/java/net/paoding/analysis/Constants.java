@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Constants.java 2012-7-6 10:23:22 l.xue.nong$$
+ */
 package net.paoding.analysis;
 
 import java.util.HashMap;
@@ -5,93 +9,118 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 2.0.0
+ * The Class Constants.
+ *
+ * @author l.xue.nong
  */
 @SuppressWarnings("unchecked")
 public class Constants {
 
-	/**
-	 * "词典目录安装目录"配置的优先级别
-	 * <p>
-	 * "system-env"以及其他非"this"的配置，表示优先从环境变量PAODING_DIC_HOME的值找词典目录安装环境
-	 * "this"表示优先从本配置文件的paoding.dic.home配置项找<br>
-	 * 只有在高优先级没有配置，才会找低优先级的配置。 默认环境变量的优先级别高于paoding-analysis.properties属性文件配置。
-	 */
+	/** The Constant DIC_HOME_CONFIG_FIRST. */
 	public static final String DIC_HOME_CONFIG_FIRST = "paoding.dic.home.config-first";
+	
+	/** The Constant DIC_HOME_CONFIG_FIRST_DEFAULT. */
 	public static final String DIC_HOME_CONFIG_FIRST_DEFAULT = "system-env";
 
-	/**
-	 * 词典安装目录环境变量名
-	 */
+	/** The Constant ENV_PAODING_DIC_HOME. */
 	public static final String ENV_PAODING_DIC_HOME = "PAODING_DIC_HOME";
 
 	// -------------------------------------------------------------
-	/**
-	 * 词典安装目录
-	 * <p>
-	 * 默认值为null，以在环境变量和配置文件都没有配置paoding.dic.home的情况下，让PaodingMaker尝试从当前工作目录下、类路径下探索是否存在dic目录
-	 */
+	/** The Constant DIC_HOME. */
 	public static final String DIC_HOME = "paoding.dic.home";
+	
+	/** The Constant DIC_HOME_DEFAULT. */
 	public static final String DIC_HOME_DEFAULT = null;
 
 	// -------------------------------------------------------------
 	//
+	/** The Constant DIC_CHARSET. */
 	public static final String DIC_CHARSET = "paoding.dic.charset";
+	
+	/** The Constant DIC_CHARSET_DEFAULT. */
 	public static final String DIC_CHARSET_DEFAULT = "UTF-8";
 
 	// dictionary word length limit
+	/** The Constant DIC_MAXWORDLEN. */
 	public static final String DIC_MAXWORDLEN = "paoding.dic.maxWordLen";
+	
+	/** The Constant DIC_MAXWORDLEN_DEFAULT. */
 	public static final String DIC_MAXWORDLEN_DEFAULT = "0";
 	
 	// -------------------------------------------------------------
 	// dictionaries which are skip
+	/** The Constant DIC_SKIP_PREFIX. */
 	public static final String DIC_SKIP_PREFIX = "paoding.dic.skip.prefix";
+	
+	/** The Constant DIC_SKIP_PREFIX_DEFAULT. */
 	public static final String DIC_SKIP_PREFIX_DEFAULT = "x-";
 
 	// -------------------------------------------------------------
 	// chinese/cjk charactors that will not token
+	/** The Constant DIC_NOISE_CHARACTOR. */
 	public static final String DIC_NOISE_CHARACTOR = "paoding.dic.noise-charactor";
+	
+	/** The Constant DIC_NOISE_CHARACTOR_DEFAULT. */
 	public static final String DIC_NOISE_CHARACTOR_DEFAULT = "x-noise-charactor";
 
 	// -------------------------------------------------------------
 	// chinese/cjk words that will not token
+	/** The Constant DIC_NOISE_WORD. */
 	public static final String DIC_NOISE_WORD = "paoding.dic.noise-word";
+	
+	/** The Constant DIC_NOISE_WORD_DEFAULT. */
 	public static final String DIC_NOISE_WORD_DEFAULT = "x-noise-word";
 
 	// -------------------------------------------------------------
 	// unit words, like "ge", "zhi", ...
+	/** The Constant DIC_UNIT. */
 	public static final String DIC_UNIT = "paoding.dic.unit";
+	
+	/** The Constant DIC_UNIT_DEFAULT. */
 	public static final String DIC_UNIT_DEFAULT = "x-unit";
 
 	// -------------------------------------------------------------
 	// like "Wang", "Zhang", ...
+	/** The Constant DIC_CONFUCIAN_FAMILY_NAME. */
 	public static final String DIC_CONFUCIAN_FAMILY_NAME = "paoding.dic.confucian-family-name";
+	
+	/** The Constant DIC_CONFUCIAN_FAMILY_NAME_DEFAULT. */
 	public static final String DIC_CONFUCIAN_FAMILY_NAME_DEFAULT = "x-confucian-family-name";
 	
 	// -------------------------------------------------------------
 	// like 
+	/** The Constant DIC_FOR_COMBINATORICS. */
 	public static final String DIC_FOR_COMBINATORICS = "paoding.dic.for-combinatorics";
+	
+	/** The Constant DIC_FOR_COMBINATORICS_DEFAULT. */
 	public static final String DIC_FOR_COMBINATORICS_DEFAULT = "x-for-combinatorics";
 
 	// -------------------------------------------------------------
 	// like 
+	/** The Constant DIC_DETECTOR_INTERVAL. */
 	public static final String DIC_DETECTOR_INTERVAL = "paoding.dic.detector.interval";
+	
+	/** The Constant DIC_DETECTOR_INTERVAL_DEFAULT. */
 	public static final String DIC_DETECTOR_INTERVAL_DEFAULT = "60";
 
 	// -------------------------------------------------------------
 	// like "default", "max", ...
+	/** The Constant ANALYZER_MODE. */
 	public static final String ANALYZER_MODE = "paoding.analyzer.mode";
+	
+	/** The Constant ANALYZER_MOE_DEFAULT. */
 	public static final String ANALYZER_MOE_DEFAULT = "most-words";
 
 	// -------------------------------------------------------------
 	// 
+	/** The Constant ANALYZER_DICTIONARIES_COMPILER. */
 	public static final String ANALYZER_DICTIONARIES_COMPILER = "paoding.analyzer.dictionaries.compiler";
+	
+	/** The Constant ANALYZER_DICTIONARIES_COMPILER_DEFAULT. */
 	public static final String ANALYZER_DICTIONARIES_COMPILER_DEFAULT = null;
 
 	// -------------------------------------------------------------
+	/** The Constant map. */
 	@SuppressWarnings("rawtypes")
 	private static final Map/* <String, String> */map = new HashMap();
 
@@ -112,8 +141,16 @@ public class Constants {
 	}
 
 	//
+	/** The Constant KNIFE_CLASS. */
 	public static final String KNIFE_CLASS = "paoding.knife.class.";
 
+	/**
+	 * Gets the property.
+	 *
+	 * @param p the p
+	 * @param name the name
+	 * @return the property
+	 */
 	public static String getProperty(Properties p, String name) {
 		return p.getProperty(name, (String) map.get(name));
 	}

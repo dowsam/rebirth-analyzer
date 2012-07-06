@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer CJKKnife.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
@@ -20,30 +9,46 @@ import net.paoding.analysis.dictionary.Hit;
 import net.paoding.analysis.dictionary.Word;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.0
- * 
+ * The Class CJKKnife.
+ *
+ * @author l.xue.nong
  */
 public class CJKKnife implements Knife, DictionariesWare {
 
 	// -------------------------------------------------
 
+	/** The vocabulary. */
 	private Dictionary vocabulary;
+	
+	/** The noise words. */
 	private Dictionary noiseWords;
+	
+	/** The noise charactors. */
 	private Dictionary noiseCharactors;
+	
+	/** The units. */
 	private Dictionary units;
 
 	// -------------------------------------------------
 
+	/**
+	 * Instantiates a new cJK knife.
+	 */
 	public CJKKnife() {
 	}
 
+	/**
+	 * Instantiates a new cJK knife.
+	 *
+	 * @param dictionaries the dictionaries
+	 */
 	public CJKKnife(Dictionaries dictionaries) {
 		setDictionaries(dictionaries);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.DictionariesWare#setDictionaries(net.paoding.analysis.knife.Dictionaries)
+	 */
 	public void setDictionaries(Dictionaries dictionaries) {
 		vocabulary = dictionaries.getVocabularyDictionary();
 		noiseWords = dictionaries.getNoiseWordsDictionary();
@@ -53,8 +58,8 @@ public class CJKKnife implements Knife, DictionariesWare {
 
 	// -------------------------------------------------
 
-	/**
-	 * 分解以CJK字符开始的，后可带阿拉伯数字、英文字母、横线、下划线的字符组成的语句
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.Knife#assignable(net.paoding.analysis.knife.Beef, int, int)
 	 */
 	public int assignable(Beef beef, int offset, int index) {
 		char ch = beef.charAt(index);
@@ -69,6 +74,9 @@ public class CJKKnife implements Knife, DictionariesWare {
 		return LIMIT;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.Knife#dissect(net.paoding.analysis.knife.Collector, net.paoding.analysis.knife.Beef, int)
+	 */
 	public int dissect(Collector collector, Beef beef, int offset) {
 		// 当point == -1时表示本次分解没有遇到POINT性质的字符；
 		// 如果point != -1，该值表示POINT性质字符的开始位置，
@@ -276,6 +284,14 @@ public class CJKKnife implements Knife, DictionariesWare {
 
 	// -------------------------------------------------
 
+	/**
+	 * Search number.
+	 *
+	 * @param input the input
+	 * @param offset the offset
+	 * @param count the count
+	 * @return the hit
+	 */
 	protected Hit searchNumber(CharSequence input, int offset, int count) {
 		int endPos = -1;
 		StringBuilder nums = new StringBuilder();
@@ -306,12 +322,12 @@ public class CJKKnife implements Knife, DictionariesWare {
 	}
 
 	/**
-	 * 对孤立字符串分词
-	 * 
-	 * @param cellector
-	 * @param beef
-	 * @param offset
-	 * @param count
+	 * Dissect isolated.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param limit the limit
 	 */
 	protected void dissectIsolated(Collector collector, Beef beef, int offset,
 			int limit) {
@@ -356,6 +372,16 @@ public class CJKKnife implements Knife, DictionariesWare {
 		}
 	}
 
+	/**
+	 * Collect number.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @param binOffset the bin offset
+	 * @return the int
+	 */
 	protected int collectNumber(Collector collector, Beef beef, int offset,
 			int limit, int binOffset) {
 
@@ -482,6 +508,16 @@ public class CJKKnife implements Knife, DictionariesWare {
 		return curTail;
 	}
 
+	/**
+	 * Skip noise words.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param end the end
+	 * @param binOffset the bin offset
+	 * @return the int
+	 */
 	protected int skipNoiseWords(Collector collector, Beef beef, int offset,
 			int end, int binOffset) {
 		Hit word;
@@ -502,6 +538,14 @@ public class CJKKnife implements Knife, DictionariesWare {
 		return offset;
 	}
 
+	/**
+	 * Bin dissect.
+	 *
+	 * @param collector the collector
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param limit the limit
+	 */
 	protected void binDissect(Collector collector, Beef beef, int offset,
 			int limit) {
 		// 二元分词之策略：以W、X、Y、Z表示孤立字符串中的4个汉字
@@ -522,6 +566,14 @@ public class CJKKnife implements Knife, DictionariesWare {
 		}
 	}
 
+	/**
+	 * Should be word.
+	 *
+	 * @param beef the beef
+	 * @param offset the offset
+	 * @param end the end
+	 * @return true, if successful
+	 */
 	protected boolean shouldBeWord(Beef beef, int offset, int end) {
 		char prevChar = beef.charAt(offset - 1);
 		char endChar = beef.charAt(end);

@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer MostWordsTokenCollector.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.analyzer.impl;
 
@@ -22,20 +11,20 @@ import net.paoding.analysis.analyzer.TokenCollector;
 import org.apache.lucene.analysis.Token;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.1
+ * The Class MostWordsTokenCollector.
+ *
+ * @author l.xue.nong
  */
 public class MostWordsTokenCollector implements TokenCollector, Iterator {
 
+	/** The first token. */
 	private LinkedToken firstToken;
+	
+	/** The last token. */
 	private LinkedToken lastToken;
 
-	/**
-	 * Collector接口实现。<br>
-	 * 构造词语Token对象，并放置在tokens中
-	 * 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.Collector#collect(java.lang.String, int, int)
 	 */
 	public void collect(String word, int begin, int end) {
 		LinkedToken tokenToAdd = new LinkedToken(word, begin, end);
@@ -69,35 +58,67 @@ public class MostWordsTokenCollector implements TokenCollector, Iterator {
 		}
 	}
 
+	/** The next linked token. */
 	private LinkedToken nextLinkedToken;
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.analyzer.TokenCollector#iterator()
+	 */
 	public Iterator/* <Token> */iterator() {
 		nextLinkedToken = firstToken;
 		firstToken = null;
 		return this;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#hasNext()
+	 */
 	public boolean hasNext() {
 		return nextLinkedToken != null;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#next()
+	 */
 	public Object next() {
 		LinkedToken ret = nextLinkedToken;
 		nextLinkedToken = nextLinkedToken.next;
 		return ret;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Iterator#remove()
+	 */
 	public void remove() {
 	}
 
+	/**
+	 * The Class LinkedToken.
+	 *
+	 * @author l.xue.nong
+	 */
 	private static class LinkedToken extends Token implements Comparable {
+		
+		/** The pre. */
 		public LinkedToken pre;
+		
+		/** The next. */
 		public LinkedToken next;
 
+		/**
+		 * Instantiates a new linked token.
+		 *
+		 * @param word the word
+		 * @param begin the begin
+		 * @param end the end
+		 */
 		public LinkedToken(String word, int begin, int end) {
 			super(word, begin, end);
 		}
 
+		/* (non-Javadoc)
+		 * @see java.lang.Comparable#compareTo(java.lang.Object)
+		 */
 		public int compareTo(Object obj) {
 			LinkedToken that = (LinkedToken) obj;
 			// 简单/单单/简简单单/

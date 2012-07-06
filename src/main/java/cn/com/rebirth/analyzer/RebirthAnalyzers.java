@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
- * Info:summall-analyzer SumMallAnalyzer.java 2012-2-13 13:32:39 l.xue.nong$$
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer rebirthAnalyzers.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package cn.com.rebirth.analyzer;
 
@@ -11,11 +11,11 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.util.Version;
 
 /**
- * The Interface SumMallAnalyzer.
+ * The Interface rebirthAnalyzers.
  *
  * @author l.xue.nong
  */
-public interface RestartAnalyzers extends Serializable {
+public interface RebirthAnalyzers extends Serializable {
 
 	/**
 	 * Gets the analyzer impl name.

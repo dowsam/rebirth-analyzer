@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer IKAnalyzer.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package org.wltea.analyzer.lucene;
 
@@ -9,28 +10,26 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 
 /**
- * 实现Lucene Analyzer
- * 基于IKTokenizer的中文分词器
- * 
- * @author 林良益
+ * The Class IKAnalyzer.
  *
+ * @author l.xue.nong
  */
 public final class IKAnalyzer extends Analyzer {
 	
+	/** The is max word length. */
 	private boolean isMaxWordLength = false;
 	
 	/**
-	 * IK分词器Lucene Analyzer接口实现类
-	 * 默认最细粒度切分算法
+	 * Instantiates a new iK analyzer.
 	 */
 	public IKAnalyzer(){
 		this(false);
 	}
 	
 	/**
-	 * IK分词器Lucene Analyzer接口实现类
-	 * 
-	 * @param isMaxWordLength 当为true时，分词器进行最大词长切分
+	 * Instantiates a new iK analyzer.
+	 *
+	 * @param isMaxWordLength the is max word length
 	 */
 	public IKAnalyzer(boolean isMaxWordLength){
 		super();
@@ -45,10 +44,20 @@ public final class IKAnalyzer extends Analyzer {
 		return new IKTokenizer(reader , isMaxWordLength());
 	}
 
+	/**
+	 * Sets the max word length.
+	 *
+	 * @param isMaxWordLength the new max word length
+	 */
 	public void setMaxWordLength(boolean isMaxWordLength) {
 		this.isMaxWordLength = isMaxWordLength;
 	}
 
+	/**
+	 * Checks if is max word length.
+	 *
+	 * @return true, if is max word length
+	 */
 	public boolean isMaxWordLength() {
 		return isMaxWordLength;
 	}

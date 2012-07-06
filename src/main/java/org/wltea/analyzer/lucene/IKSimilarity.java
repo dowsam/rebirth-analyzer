@@ -1,22 +1,19 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer IKSimilarity.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package org.wltea.analyzer.lucene;
 
 import org.apache.lucene.search.DefaultSimilarity;
 
 /**
- * IK Analyzer v3.2
- * 相似度评估器
- * 重载了DefaultSimilarity的coord方法
- * 提高词元命中个数在相似度比较中的权重影响，即，当有多个词元得到匹配时，文档的相似度将提高
- * @author 林良益
+ * The Class IKSimilarity.
  *
+ * @author l.xue.nong
  */
 public class IKSimilarity extends DefaultSimilarity {
-	/**
-	 * 
-	 */
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 7558565500061194774L;
 
 	/* (non-Javadoc)

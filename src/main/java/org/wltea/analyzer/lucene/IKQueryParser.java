@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer IKQueryParser.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package org.wltea.analyzer.lucene;
 
@@ -26,39 +27,37 @@ import org.wltea.analyzer.IKSegmentation;
 import org.wltea.analyzer.Lexeme;
 
 /**
- * IK查询分析器
- * 实现了对分词歧义结果的非冲突排列组合
- * 有效的优化对歧义关键词的搜索命中
- * 针对IK Analyzer V3的优化实现
- * 
- * @author 林良益
+ * The Class IKQueryParser.
  *
+ * @author l.xue.nong
  */
 public final class IKQueryParser {
 	
 	
 	//查询关键字解析缓存线程本地变量
+	/** The keyword cache thread local. */
 	private static ThreadLocal<Map<String , TokenBranch>> keywordCacheThreadLocal 
 			= new ThreadLocal<Map<String , TokenBranch>>();
 	
 	
 	//是否采用最大词长分词
+	/** The is max word length. */
 	private static boolean isMaxWordLength = false;
 
 	/**
-	 * 设置分词策略
-	 * isMaxWordLength = true 采用最大词长分词
-	 * @param isMaxWordLength
+	 * Sets the max word length.
+	 *
+	 * @param isMaxWordLength the new max word length
 	 */
 	public static void setMaxWordLength(boolean isMaxWordLength) {
 		IKQueryParser.isMaxWordLength = isMaxWordLength ;
 	}
 	
 	/**
-	 * 优化query队列
-	 * 减少Query表达式的嵌套
-	 * @param queries
-	 * @return
+	 * Optimize queries.
+	 *
+	 * @param queries the queries
+	 * @return the query
 	 */
 	private static Query optimizeQueries(List<Query> queries){	
 		//生成当前branch 的完整query
@@ -76,8 +75,9 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 获取线程本地的解析缓存
-	 * @return
+	 * Gets the thead local cache.
+	 *
+	 * @return the thead local cache
 	 */
 	private static Map<String , TokenBranch> getTheadLocalCache(){
 		Map<String , TokenBranch> keywordCache = keywordCacheThreadLocal.get();
@@ -89,9 +89,10 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 缓存解析结果的博弈树
-	 * @param query
-	 * @return
+	 * Gets the cached token branch.
+	 *
+	 * @param query the query
+	 * @return the cached token branch
 	 */
 	private static TokenBranch getCachedTokenBranch(String query){
 		Map<String , TokenBranch> keywordCache = getTheadLocalCache();
@@ -99,9 +100,10 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 缓存解析结果的博弈树
-	 * @param query
-	 * @return
+	 * Cached token branch.
+	 *
+	 * @param query the query
+	 * @param tb the tb
 	 */
 	private static void cachedTokenBranch(String query , TokenBranch tb){
 		Map<String , TokenBranch> keywordCache = getTheadLocalCache();
@@ -110,10 +112,11 @@ public final class IKQueryParser {
 		
 	
 	/**
-	 * 单连续字窜（不带空格符）单Field查询分析
-	 * @param field
-	 * @param query
-	 * @return
+	 * Parses the.
+	 *
+	 * @param field the field
+	 * @param query the query
+	 * @return the query
 	 */
 	public static Query parse(String field , String query){
 		if(field == null){
@@ -149,9 +152,10 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 解析IK简易查询表达式
-	 * @param ikQueryExp
-	 * @return Query 查询逻辑对象
+	 * Parses the.
+	 *
+	 * @param ikQueryExp the ik query exp
+	 * @return the query
 	 */
 	public static Query parse(String ikQueryExp){
 		ExpressionParser ikExpParser = new ExpressionParser();
@@ -159,11 +163,12 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 单条件,单Field查询分析
-	 * @param field -- Document field name
-	 * @param query -- keyword
-	 * @return Query 查询逻辑对象
-	 * @throws IOException
+	 * Parses the multi field.
+	 *
+	 * @param fields the fields
+	 * @param query the query
+	 * @return the query
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 //	public static Query parse(String field , String query){
 //		if(field == null){
@@ -224,12 +229,13 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 多Field,单条件,多Occur查询分析
-	 * @param fields -- Document fields name
-	 * @param query	-- keyword
-	 * @param flags -- BooleanClause
-	 * @return Query 查询逻辑对象
-	 * @throws IOException
+	 * Parses the multi field.
+	 *
+	 * @param fields the fields
+	 * @param query the query
+	 * @param flags the flags
+	 * @return the query
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static Query parseMultiField(String[] fields , String query ,  BooleanClause.Occur[] flags) throws IOException{
 		if(fields == null){
@@ -257,11 +263,12 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 多Field多条件查询分析
-	 * @param fields
-	 * @param queries
-	 * @return Query 查询逻辑对象
-	 * @throws IOException 
+	 * Parses the multi field.
+	 *
+	 * @param fields the fields
+	 * @param queries the queries
+	 * @return the query
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static Query parseMultiField(String[] fields , String[] queries) throws IOException{
 		if(fields == null){
@@ -287,12 +294,13 @@ public final class IKQueryParser {
 	}
 
 	/**
-	 * 多Field,多条件,多Occur查询分析
-	 * @param fields
-	 * @param queries
-	 * @param flags
-	 * @return Query 查询逻辑对象
-	 * @throws IOException
+	 * Parses the multi field.
+	 *
+	 * @param fields the fields
+	 * @param queries the queries
+	 * @param flags the flags
+	 * @return the query
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static Query parseMultiField(String[] fields , String[] queries , BooleanClause.Occur[] flags) throws IOException{
 		if(fields == null){
@@ -321,29 +329,44 @@ public final class IKQueryParser {
 		}		
 		return resultQuery;
 	}	
+	
 	/**
-	 * 词元分支
-	 * 当分词出现歧义时，采用词元分支容纳不同的歧义组合
-	 * @author 林良益
+	 * The Class TokenBranch.
 	 *
+	 * @author l.xue.nong
 	 */
 	private static class TokenBranch{
 		
+		/** The Constant REFUSED. */
 		private static final int REFUSED = -1;
+		
+		/** The Constant ACCEPTED. */
 		private static final int ACCEPTED = 0;
+		
+		/** The Constant TONEXT. */
 		private static final int TONEXT = 1;
 		
 		//词元分支左边界
+		/** The left border. */
 		private int leftBorder;
 		//词元分支右边界
+		/** The right border. */
 		private int rightBorder;
 		//当前分支主词元
+		/** The lexeme. */
 		private Lexeme lexeme;
 		//当前分支可并入的词元分支
+		/** The accepted branchs. */
 		private List<TokenBranch> acceptedBranchs;
 		//当前分支的后一个相邻分支
+		/** The next branch. */
 		private TokenBranch nextBranch;
 		
+		/**
+		 * Instantiates a new token branch.
+		 *
+		 * @param lexeme the lexeme
+		 */
 		TokenBranch(Lexeme lexeme){
 			if(lexeme != null){
 				this.lexeme = lexeme;
@@ -353,26 +376,54 @@ public final class IKQueryParser {
 			}
 		}
 		
+		/**
+		 * Gets the left border.
+		 *
+		 * @return the left border
+		 */
 		public int getLeftBorder() {
 			return leftBorder;
 		}
 
+		/**
+		 * Gets the right border.
+		 *
+		 * @return the right border
+		 */
 		public int getRightBorder() {
 			return rightBorder;
 		}
 
+		/**
+		 * Gets the lexeme.
+		 *
+		 * @return the lexeme
+		 */
 		public Lexeme getLexeme() {
 			return lexeme;
 		}
 
+		/**
+		 * Gets the accepted branchs.
+		 *
+		 * @return the accepted branchs
+		 */
 		public List<TokenBranch> getAcceptedBranchs() {
 			return acceptedBranchs;
 		}
 
+		/**
+		 * Gets the next branch.
+		 *
+		 * @return the next branch
+		 */
 		public TokenBranch getNextBranch() {
 			return nextBranch;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
 		public int hashCode(){
 			if(this.lexeme == null){
 				return 0;
@@ -381,6 +432,9 @@ public final class IKQueryParser {
 			}
 		}
 		
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
 		public boolean equals(Object o){			
 			if(o == null){
 				return false;
@@ -402,9 +456,10 @@ public final class IKQueryParser {
 		}	
 		
 		/**
-		 * 组合词元分支
-		 * @param _lexeme
-		 * @return 返回当前branch能否接收词元对象
+		 * Accept.
+		 *
+		 * @param _lexeme the _lexeme
+		 * @return true, if successful
 		 */
 		boolean accept(Lexeme _lexeme){
 			
@@ -456,8 +511,10 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 将分支数据转成Query逻辑
-		 * @return
+		 * To queries.
+		 *
+		 * @param fieldName the field name
+		 * @return the list
 		 */
 		List<Query> toQueries(String fieldName){			
 			List<Query> queries = new ArrayList<Query>(1);			
@@ -493,9 +550,10 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 判断指定的lexeme能否被当前的branch接受
-		 * @param lexeme
-		 * @return 返回接受的形式
+		 * Check accept.
+		 *
+		 * @param _lexeme the _lexeme
+		 * @return the int
 		 */
 		private int checkAccept(Lexeme _lexeme){
 			int acceptType = 0;
@@ -536,33 +594,34 @@ public final class IKQueryParser {
 	}
 	
 	/**
-	 * 查询表达式解析
-	 * alpha版本
-	 * 自定义lucene查询表达式
-	 * 表达式例子 ：
-	 * (id='1231231' && title:'monkey') || (content:'你好吗'  || ulr='www.ik.com') - name:'helloword'
-	 * 
-	 * @author linliangyi
-	 * May 20, 2010
+	 * The Class ExpressionParser.
+	 *
+	 * @author l.xue.nong
 	 */
 	static class ExpressionParser {
 		
 		//public static final String LUCENE_SPECIAL_CHAR = "&&||-()':={}[],";
 		
+		/** The elements. */
 		private List<Element> elements = new ArrayList<Element>();
 		
+		/** The querys. */
 		private Stack<Query> querys =  new Stack<Query>();
 		
+		/** The operates. */
 		private Stack<Element> operates = new Stack<Element>();
 		
+		/**
+		 * Instantiates a new expression parser.
+		 */
 		public ExpressionParser(){
 		}
 
 		/**
-		 * 解析查询表达式，生成Lucene Query对象
-		 * 
-		 * @param expression
-		 * @return
+		 * Parser exp.
+		 *
+		 * @param expression the expression
+		 * @return the query
 		 */
 		public Query parserExp(String expression){
 			Query lucenceQuery = null;
@@ -585,8 +644,9 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 表达式文法解析
-		 * @param expression
+		 * Split elements.
+		 *
+		 * @param expression the expression
 		 */
 		private void splitElements(String expression){
 	 		
@@ -855,8 +915,7 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 语法解析
-		 * 
+		 * Parses the syntax.
 		 */
 		private void parseSyntax(){
 			for(int i = 0 ; i < this.elements.size() ; i++){
@@ -958,9 +1017,10 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 根据逻辑操作符，生成BooleanQuery
-		 * @param op
-		 * @return
+		 * To query.
+		 *
+		 * @param op the op
+		 * @return the query
 		 */
 		private Query toQuery(Element op){
 			if(this.querys.size() == 0){
@@ -1090,9 +1150,11 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 组装TermRangeQuery
-		 * @param elements
-		 * @return
+		 * To term range query.
+		 *
+		 * @param fieldNameEle the field name ele
+		 * @param elements the elements
+		 * @return the term range query
 		 */
 		private TermRangeQuery toTermRangeQuery(Element fieldNameEle , LinkedList<Element> elements){
 
@@ -1155,10 +1217,11 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 组装Lucene Query
-		 * 处理关键字紧凑搜索
-		 * @param elements
-		 * @return
+		 * Lucene query parse.
+		 *
+		 * @param fieldName the field name
+		 * @param keyword the keyword
+		 * @return the query
 		 */
 		private Query luceneQueryParse(String fieldName , String keyword){
 			//截取头部^尾部$
@@ -1176,10 +1239,11 @@ public final class IKQueryParser {
 		
 		
 		/**
-		 * 比较操作符优先级
-		 * @param e1
-		 * @param e2
-		 * @return
+		 * Compare.
+		 *
+		 * @param e1 the e1
+		 * @param e2 the e2
+		 * @return the int
 		 */
 		private int compare(Element e1 , Element e2){
 			if('&' == e1.type){
@@ -1206,29 +1270,49 @@ public final class IKQueryParser {
 		}
 		
 		/**
-		 * 表达式元素
-		 * 
-		 * @author linliangyi
-		 * May 20, 2010
+		 * The Class Element.
+		 *
+		 * @author l.xue.nong
 		 */
 		private class Element{
+			
+			/** The type. */
 			char type = 0;
+			
+			/** The ele text buff. */
 			StringBuffer eleTextBuff;
 
+			/**
+			 * Instantiates a new element.
+			 */
 			public Element(){
 				eleTextBuff = new StringBuffer();
 			}
 			
+			/**
+			 * Append.
+			 *
+			 * @param c the c
+			 */
 			public void append(char c){
 				this.eleTextBuff.append(c);
 			}
 		
+			/* (non-Javadoc)
+			 * @see java.lang.Object#toString()
+			 */
 			public String toString(){
 				return this.eleTextBuff.toString();
 			}
 			
 		}
 	}
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args){
 		String ikQueryExp = "(id='ABcdRf' && date:{'20010101','20110101'} && keyword:'^魔兽中国$') || (content:'魔兽 中国'  || ulr='www.ik.com') - name:'林良益'";
 //		String ikQueryExp = "content:'----'  || title:'----' - name:'林良益'";

@@ -1,19 +1,52 @@
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer CharacterUtils.java 2012-7-6 10:23:22 l.xue.nong$$
+ */
 package cn.com.rebirth.analyzer.utils;
 
+/**
+ * The Class CharacterUtils.
+ *
+ * @author l.xue.nong
+ */
 public class CharacterUtils {
 
+	/**
+	 * Checks if is space letter.
+	 *
+	 * @param input the input
+	 * @return true, if is space letter
+	 */
 	public static boolean isSpaceLetter(char input) {
 		return input == 8 || input == 9 || input == 10 || input == 13 || input == 32 || input == 160;
 	}
 
+	/**
+	 * Checks if is english letter.
+	 *
+	 * @param input the input
+	 * @return true, if is english letter
+	 */
 	public static boolean isEnglishLetter(char input) {
 		return (input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z');
 	}
 
+	/**
+	 * Checks if is arabic number.
+	 *
+	 * @param input the input
+	 * @return true, if is arabic number
+	 */
 	public static boolean isArabicNumber(char input) {
 		return input >= '0' && input <= '9';
 	}
 
+	/**
+	 * Checks if is cJK character.
+	 *
+	 * @param input the input
+	 * @return true, if is cJK character
+	 */
 	public static boolean isCJKCharacter(char input) {
 		Character.UnicodeBlock ub = Character.UnicodeBlock.of(input);
 		if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
@@ -38,9 +71,10 @@ public class CharacterUtils {
 	}
 
 	/**
-	 * 进行字符规格化（全角转半角，大写转小写处理）
-	 * @param input
-	 * @return char
+	 * Regularize.
+	 *
+	 * @param input the input
+	 * @return the char
 	 */
 	public static char regularize(char input) {
 		if (input == 12288) {

@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer NumberKnife.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
@@ -21,27 +10,42 @@ import net.paoding.analysis.dictionary.Dictionary;
 import net.paoding.analysis.dictionary.Hit;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
+ * The Class NumberKnife.
+ *
+ * @author l.xue.nong
  */
 public class NumberKnife extends CombinatoricsKnife implements DictionariesWare {
 
+	/** The units. */
 	private Dictionary units;
 	
+	/**
+	 * Instantiates a new number knife.
+	 */
 	public NumberKnife() {
 	}
 
+	/**
+	 * Instantiates a new number knife.
+	 *
+	 * @param dictionaries the dictionaries
+	 */
 	public NumberKnife(Dictionaries dictionaries) {
 		setDictionaries(dictionaries);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.CombinatoricsKnife#setDictionaries(net.paoding.analysis.knife.Dictionaries)
+	 */
 	public void setDictionaries(Dictionaries dictionaries) {
 		super.setDictionaries(dictionaries);
 		units = dictionaries.getUnitsDictionary();
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.Knife#assignable(net.paoding.analysis.knife.Beef, int, int)
+	 */
 	public int assignable(Beef beef, int offset, int index) {
 		char ch = beef.charAt(index);
 		if (CharSet.isArabianNumber(ch))
@@ -63,6 +67,9 @@ public class NumberKnife extends CombinatoricsKnife implements DictionariesWare 
 		return LIMIT;
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.CombinatoricsKnife#collectLimit(net.paoding.analysis.knife.Collector, net.paoding.analysis.knife.Beef, int, int, int, int)
+	 */
 	protected int collectLimit(Collector collector, Beef beef,
 			int offset, int point, int limit, int dicWordVote) {
 		// "123abc"的直接调用super的

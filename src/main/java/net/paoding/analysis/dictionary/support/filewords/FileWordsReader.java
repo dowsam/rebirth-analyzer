@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer FileWordsReader.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.dictionary.support.filewords;
 
@@ -31,14 +20,21 @@ import java.util.Map;
 import net.paoding.analysis.knife.CharSet;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.0
- * 
+ * The Class FileWordsReader.
+ *
+ * @author l.xue.nong
  */
 public class FileWordsReader {
 
+	/**
+	 * Read words.
+	 *
+	 * @param fileOrDirectory the file or directory
+	 * @param charsetName the charset name
+	 * @param maxWordLen the max word len
+	 * @return the map
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static Map/*<String, Set<Word>>*/ readWords(
 			String fileOrDirectory, String charsetName, int maxWordLen) throws IOException {
 		SimpleReadListener l = new SimpleReadListener();
@@ -46,6 +42,17 @@ public class FileWordsReader {
 		return l.getResult();
 	}
 	
+	/**
+	 * Read words.
+	 *
+	 * @param fileOrDirectory the file or directory
+	 * @param charsetName the charset name
+	 * @param maxWordLen the max word len
+	 * @param collectionClass the collection class
+	 * @param ext the ext
+	 * @return the map
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static Map/*<String, Collection<Word>>*/ readWords(
 			String fileOrDirectory, String charsetName, int maxWordLen, Class collectionClass, String ext) throws IOException {
 		SimpleReadListener2 l = new SimpleReadListener2(collectionClass, ext);
@@ -53,6 +60,15 @@ public class FileWordsReader {
 		return l.getResult();
 	}
 
+	/**
+	 * Read words.
+	 *
+	 * @param fileOrDirectory the file or directory
+	 * @param l the l
+	 * @param charsetName the charset name
+	 * @param maxWordLen the max word len
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void readWords(String fileOrDirectory, ReadListener l, String charsetName, int maxWordLen)
 			throws IOException {
 		File file;
@@ -126,6 +142,12 @@ public class FileWordsReader {
 		}
 	}
 	
+	/**
+	 * Gets the url path.
+	 *
+	 * @param url the url
+	 * @return the url path
+	 */
 	private static String getUrlPath(URL url){
 		if (url == null) return null;
 		String urlPath = null;

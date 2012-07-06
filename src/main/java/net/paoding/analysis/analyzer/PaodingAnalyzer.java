@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer PaodingAnalyzer.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.analyzer;
 
@@ -24,41 +13,33 @@ import net.paoding.analysis.knife.Paoding;
 import net.paoding.analysis.knife.PaodingMaker;
 
 /**
- * PaodingAnalyzer是基于“庖丁解牛”框架的Lucene词语分析器，是“庖丁解牛”框架对Lucene的适配器。
- * <p>
- * 
- * PaodingAnalyzer是线程安全的：并发情况下使用同一个PaodingAnalyzer实例是可行的。<br>
- * PaodingAnalyzer是可复用的：推荐多次同一个PaodingAnalyzer实例。
- * <p>
- * 
- * PaodingAnalyzer自动读取类路径下的paoding-analysis.properties属性文件，装配PaodingAnalyzer
- * <p>
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @see PaodingAnalyzerBean
- * 
- * @since 1.0
- * 
+ * The Class PaodingAnalyzer.
+ *
+ * @author l.xue.nong
  */
 public class PaodingAnalyzer extends PaodingAnalyzerBean {
 
 	/**
-	 * 根据类路径下的paoding-analysis.properties构建一个PaodingAnalyzer对象
-	 * <p>
-	 * 在一个JVM中，可多次创建，而并不会多次读取属性文件，不会重复读取字典。
+	 * Instantiates a new paoding analyzer.
 	 */
 	public PaodingAnalyzer() {
 		this(PaodingMaker.DEFAULT_PROPERTIES_PATH);
 	}
 
 	/**
-	 * @param propertiesPath null表示使用类路径下的paoding-analysis.properties
+	 * Instantiates a new paoding analyzer.
+	 *
+	 * @param propertiesPath the properties path
 	 */
 	public PaodingAnalyzer(String propertiesPath) {
 		init(propertiesPath);
 	}
 
+	/**
+	 * Inits the.
+	 *
+	 * @param propertiesPath the properties path
+	 */
 	protected void init(String propertiesPath) {
 		// 根据PaodingMaker说明，
 		// 1、多次调用getProperties()，返回的都是同一个properties实例(只要属性文件没发生过修改)
@@ -76,18 +57,9 @@ public class PaodingAnalyzer extends PaodingAnalyzerBean {
 	}
 
 	/**
-	 * 本方法为PaodingAnalyzer附带的测试评估方法。 <br>
-	 * 执行之可以查看分词效果。以下任选一种方式进行:
-	 * <p>
-	 * 
-	 * java net...PaodingAnalyzer<br>
-	 * java net...PaodingAnalyzer --help<br>
-	 * java net...PaodingAnalyzer 中华人民共和国<br>
-	 * java net...PaodingAnalyzer -m max 中华人民共和国<br>
-	 * java net...PaodingAnalyzer -f c:/text.txt<br>
-	 * java net...PaodingAnalyzer -f c:/text.txt -c utf-8<br>
-	 * 
-	 * @param args
+	 * The main method.
+	 *
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		if (System.getProperty("paoding.try.app") == null) {
@@ -100,52 +72,50 @@ public class PaodingAnalyzer extends PaodingAnalyzerBean {
 	// --------------------------------------------------
 
 	/**
-	 * @param knife
-	 * @param default_mode
-	 * @deprecated
+	 * Instantiates a new paoding analyzer.
+	 *
+	 * @param knife the knife
+	 * @param mode the mode
 	 */
 	public PaodingAnalyzer(Knife knife, int mode) {
 		super(knife, mode);
 	}
 
 	/**
-	 * 等价于maxMode()
-	 * 
-	 * @param knife
-	 * @return
-	 * @deprecated
+	 * Query mode.
+	 *
+	 * @param knife the knife
+	 * @return the paoding analyzer
 	 */
 	public static PaodingAnalyzer queryMode(Knife knife) {
 		return maxMode(knife);
 	}
 
 	/**
-	 * 
-	 * @param knife
-	 * @return
-	 * @deprecated
+	 * Default mode.
+	 *
+	 * @param knife the knife
+	 * @return the paoding analyzer
 	 */
 	public static PaodingAnalyzer defaultMode(Knife knife) {
 		return new PaodingAnalyzer(knife, MOST_WORDS_MODE);
 	}
 
 	/**
-	 * 
-	 * @param knife
-	 * @return
-	 * @deprecated
+	 * Max mode.
+	 *
+	 * @param knife the knife
+	 * @return the paoding analyzer
 	 */
 	public static PaodingAnalyzer maxMode(Knife knife) {
 		return new PaodingAnalyzer(knife, MAX_WORD_LENGTH_MODE);
 	}
 
 	/**
-	 * 等价于defaultMode()
-	 * 
-	 * @param knife
-	 * @return
-	 * @deprecated
-	 * 
+	 * Writer mode.
+	 *
+	 * @param knife the knife
+	 * @return the paoding analyzer
 	 */
 	public static PaodingAnalyzer writerMode(Knife knife) {
 		return defaultMode(knife);

@@ -1,22 +1,19 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer SmartKnifeBox.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
+/**
+ * The Class SmartKnifeBox.
+ *
+ * @author l.xue.nong
+ */
 public class SmartKnifeBox extends KnifeBox implements Knife {
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.KnifeBox#dissect(net.paoding.analysis.knife.Collector, net.paoding.analysis.knife.Beef, int)
+	 */
 	public int dissect(Collector collector, Beef beef, int offset) {
 		final int beefLength = beef.length();
 		while (offset >= 0 && offset < beefLength) {

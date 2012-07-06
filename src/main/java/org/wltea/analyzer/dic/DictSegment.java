@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer DictSegment.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package org.wltea.analyzer.dic;
 
@@ -8,39 +9,46 @@ import java.util.Map;
 
 
 /**
- * IK Analyzer v3.2
- * 字典子片断 字典匹配核心类
- * 该类采用 数组 结合 HashMap，实现词典存储，词语匹配
- * 
- * 当下属的页节点小等于3时，采用数组存储
- * 当下属的页节点大于3时，采用HashMap存储
- * @author 林良益
+ * The Class DictSegment.
  *
+ * @author l.xue.nong
  */
 public class DictSegment {
 	
 	//公用字典表，存储汉字
+	/** The Constant charMap. */
 	private static final Map<Character , Character> charMap = new HashMap<Character , Character>(16 , 0.95f);
 	
 	//数组大小上限
+	/** The Constant ARRAY_LENGTH_LIMIT. */
 	private static final int ARRAY_LENGTH_LIMIT = 3;
 	
 	//当前节点上存储的字符
+	/** The node char. */
 	private Character nodeChar;
 	
 	//Map存储结构
+	/** The children map. */
 	private Map<Character , DictSegment> childrenMap;
 	
 	//数组方式存储结构
+	/** The children array. */
 	private DictSegment[] childrenArray;
 	
 	//当前节点存储的Segment数目
 	//storeSize <=ARRAY_LENGTH_LIMIT ，使用数组存储， storeSize >ARRAY_LENGTH_LIMIT ,则使用Map存储
+	/** The store size. */
 	private int storeSize = 0;
 	
 	//当前DictSegment状态 ,默认 0 , 1表示从根节点到当前节点的路径表示一个词
+	/** The node state. */
 	private int nodeState = 0;	
 	
+	/**
+	 * Instantiates a new dict segment.
+	 *
+	 * @param nodeChar the node char
+	 */
 	public DictSegment(Character nodeChar){
 		if(nodeChar == null){
 			throw new IllegalArgumentException("参数为空异常，字符不能为空");
@@ -48,6 +56,11 @@ public class DictSegment {
 		this.nodeChar = nodeChar;
 	}
 
+	/**
+	 * Gets the node char.
+	 *
+	 * @return the node char
+	 */
 	public Character getNodeChar() {
 		return nodeChar;
 	}
@@ -55,37 +68,45 @@ public class DictSegment {
 	/*
 	 * 判断是否有下一个节点
 	 */
+	/**
+	 * Checks for next node.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean hasNextNode(){
 		return  this.storeSize > 0;
 	}
 	
 	/**
-	 * 匹配词段
-	 * @param charArray
-	 * @return Hit
+	 * Match.
+	 *
+	 * @param charArray the char array
+	 * @return the hit
 	 */
 	public Hit match(char[] charArray){
 		return this.match(charArray , 0 , charArray.length , null);
 	}
 	
 	/**
-	 * 匹配词段
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @return Hit 
+	 * Match.
+	 *
+	 * @param charArray the char array
+	 * @param begin the begin
+	 * @param length the length
+	 * @return the hit
 	 */
 	public Hit match(char[] charArray , int begin , int length){
 		return this.match(charArray , begin , length , null);
 	}
 	
 	/**
-	 * 匹配词段
-	 * @param charArray
-	 * @param begin
-	 * @param length
-	 * @param searchHit
-	 * @return Hit 
+	 * Match.
+	 *
+	 * @param charArray the char array
+	 * @param begin the begin
+	 * @param length the length
+	 * @param searchHit the search hit
+	 * @return the hit
 	 */
 	public Hit match(char[] charArray , int begin , int length , Hit searchHit){
 		
@@ -149,18 +170,20 @@ public class DictSegment {
 	}
 
 	/**
-	 * 加载填充词典片段
-	 * @param charArray
+	 * Fill segment.
+	 *
+	 * @param charArray the char array
 	 */
 	public void fillSegment(char[] charArray){
 		this.fillSegment(charArray, 0 , charArray.length); 
 	}
 	
 	/**
-	 * 加载填充词典片段
-	 * @param charArray
-	 * @param begin
-	 * @param length
+	 * Fill segment.
+	 *
+	 * @param charArray the char array
+	 * @param begin the begin
+	 * @param length the length
 	 */
 	public synchronized void fillSegment(char[] charArray , int begin , int length){
 		//获取字典表中的汉字对象
@@ -186,10 +209,10 @@ public class DictSegment {
 	}
 	
 	/**
-	 * 查找本节点下对应的keyChar的segment
-	 * 如果没有找到，则创建新的segment
-	 * @param keyChar
-	 * @return
+	 * Lookfor segment.
+	 *
+	 * @param keyChar the key char
+	 * @return the dict segment
 	 */
 	private DictSegment lookforSegment(Character keyChar){
 		
@@ -250,8 +273,9 @@ public class DictSegment {
 	
 	
 	/**
-	 * 获取数组容器
-	 * 线程同步方法
+	 * Gets the children array.
+	 *
+	 * @return the children array
 	 */
 	private DictSegment[] getChildrenArray(){
 		if(this.childrenArray == null){
@@ -265,8 +289,9 @@ public class DictSegment {
 	}
 	
 	/**
-	 * 获取Map容器
-	 * 线程同步方法
+	 * Gets the children map.
+	 *
+	 * @return the children map
 	 */	
 	private Map<Character , DictSegment> getChildrenMap(){
 		if(this.childrenMap == null){
@@ -280,8 +305,10 @@ public class DictSegment {
 	}
 	
 	/**
-	 * 将数组中的segment迁移到Map中
-	 * @param segmentArray
+	 * Migrate.
+	 *
+	 * @param segmentArray the segment array
+	 * @param segmentMap the segment map
 	 */
 	private void migrate(DictSegment[] segmentArray , Map<Character , DictSegment> segmentMap){
 		for(DictSegment segment : segmentArray){

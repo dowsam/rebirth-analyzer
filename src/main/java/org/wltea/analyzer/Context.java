@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Context.java 2012-7-6 10:23:21 l.xue.nong$$
+ */
 package org.wltea.analyzer;
 
 import java.util.HashSet;
@@ -7,36 +11,50 @@ import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.seg.ISegmenter;
 
 /**
- * 分词器上下文状态
- * @author 林良益
+ * The Class Context.
  *
+ * @author l.xue.nong
  */
 public class Context{
 	
 	//是否使用最大词长切分（粗粒度）
+	/** The is max word length. */
 	private boolean isMaxWordLength = false;	
     //记录Reader内已分析的字串总长度
     //在分多段分析词元时，该变量累计当前的segmentBuff相对于reader的位移
-	private int buffOffset;	
+	/** The buff offset. */
+    private int buffOffset;	
 	//最近一次读入的,可处理的字串长度
+	/** The available. */
 	private int available;
     //最近一次分析的字串长度
+    /** The last analyzed. */
     private int lastAnalyzed;	
     //当前缓冲区位置指针
+    /** The cursor. */
     private int cursor; 
     //字符窜读取缓冲
+    /** The segment buff. */
     private char[] segmentBuff;
     /*
      * 记录正在使用buffer的分词器对象
      * 如果set中存在有分词器对象，则buffer不能进行位移操作（处于locked状态）
      */
+    /** The buff locker. */
     private Set<ISegmenter> buffLocker;
     /*
      * 词元结果集，为每次游标的移动，存储切分出来的词元
      */
-	private IKSortedLinkSet lexemeSet;
+	/** The lexeme set. */
+    private IKSortedLinkSet lexemeSet;
 
     
+    /**
+     * Instantiates a new context.
+     *
+     * @param segmentBuff the segment buff
+     * @param isMaxWordLength the is max word length
+     */
     Context(char[] segmentBuff , boolean isMaxWordLength){
     	this.isMaxWordLength = isMaxWordLength;
     	this.segmentBuff = segmentBuff;
@@ -45,7 +63,7 @@ public class Context{
 	}
     
     /**
-     * 重置上下文
+     * Reset context.
      */
     public void resetContext(){
     	buffLocker.clear();
@@ -56,63 +74,123 @@ public class Context{
     	cursor = 0;
     }
 
+	/**
+	 * Checks if is max word length.
+	 *
+	 * @return true, if is max word length
+	 */
 	public boolean isMaxWordLength() {
 		return isMaxWordLength;
 	}
 
+	/**
+	 * Sets the max word length.
+	 *
+	 * @param isMaxWordLength the new max word length
+	 */
 	public void setMaxWordLength(boolean isMaxWordLength) {
 		this.isMaxWordLength = isMaxWordLength;
 	}
     
+	/**
+	 * Gets the buff offset.
+	 *
+	 * @return the buff offset
+	 */
 	public int getBuffOffset() {
 		return buffOffset;
 	}
 
 
+	/**
+	 * Sets the buff offset.
+	 *
+	 * @param buffOffset the new buff offset
+	 */
 	public void setBuffOffset(int buffOffset) {
 		this.buffOffset = buffOffset;
 	}
 
+	/**
+	 * Gets the last analyzed.
+	 *
+	 * @return the last analyzed
+	 */
 	public int getLastAnalyzed() {
 		return lastAnalyzed;
 	}
 
 
+	/**
+	 * Sets the last analyzed.
+	 *
+	 * @param lastAnalyzed the new last analyzed
+	 */
 	public void setLastAnalyzed(int lastAnalyzed) {
 		this.lastAnalyzed = lastAnalyzed;
 	}
 
 
+	/**
+	 * Gets the cursor.
+	 *
+	 * @return the cursor
+	 */
 	public int getCursor() {
 		return cursor;
 	}
 
 
+	/**
+	 * Sets the cursor.
+	 *
+	 * @param cursor the new cursor
+	 */
 	public void setCursor(int cursor) {
 		this.cursor = cursor;
 	}
 	
+	/**
+	 * Lock buffer.
+	 *
+	 * @param segmenter the segmenter
+	 */
 	public void lockBuffer(ISegmenter segmenter){
 		this.buffLocker.add(segmenter);
 	}
 	
+	/**
+	 * Unlock buffer.
+	 *
+	 * @param segmenter the segmenter
+	 */
 	public void unlockBuffer(ISegmenter segmenter){
 		this.buffLocker.remove(segmenter);
 	}
 	
 	/**
-	 * 只要buffLocker中存在ISegmenter对象
-	 * 则buffer被锁定
-	 * @return boolean 缓冲去是否被锁定
+	 * Checks if is buffer locked.
+	 *
+	 * @return true, if is buffer locked
 	 */
 	public boolean isBufferLocked(){
 		return this.buffLocker.size() > 0;
 	}
 
+	/**
+	 * Gets the available.
+	 *
+	 * @return the available
+	 */
 	public int getAvailable() {
 		return available;
 	}
 
+	/**
+	 * Sets the available.
+	 *
+	 * @param available the new available
+	 */
 	public void setAvailable(int available) {
 		this.available = available;
 	}
@@ -120,24 +198,27 @@ public class Context{
 	
 
 	/**
-	 * 取出分词结果集中的首个词元
-	 * @return Lexeme 集合的第一个词元
+	 * First lexeme.
+	 *
+	 * @return the lexeme
 	 */
 	public Lexeme firstLexeme() {
 		return this.lexemeSet.pollFirst();
 	}
 	
 	/**
-	 * 取出分词结果集中的最后一个词元
-	 * @return Lexeme 集合的最后一个词元
+	 * Last lexeme.
+	 *
+	 * @return the lexeme
 	 */
 	public Lexeme lastLexeme() {
 		return this.lexemeSet.pollLast();
 	}
 	
 	/**
-	 * 向分词结果集添加词元
-	 * @param lexeme
+	 * Adds the lexeme.
+	 *
+	 * @param lexeme the lexeme
 	 */
 	public void addLexeme(Lexeme lexeme){
 		if(!Dictionary.isStopWord(segmentBuff , lexeme.getBegin() , lexeme.getLength())){
@@ -146,40 +227,48 @@ public class Context{
 	}
 	
 	/**
-	 * 获取分词结果集大小
-	 * @return int 分词结果集大小
+	 * Gets the result size.
+	 *
+	 * @return the result size
 	 */
 	public int getResultSize(){
 		return this.lexemeSet.size();
 	}
 	
 	/**
-	 * 排除结果集中完全交叠（彼此包含）的词元
-	 * 进行最大切分的时候，过滤长度较小的交叠词元
+	 * Exclude overlap.
 	 */
 	public void excludeOverlap(){
 		 this.lexemeSet.excludeOverlap();
 	}
 	
 	/**
-	 * 
-	 * @author linly
+	 * The Class IKSortedLinkSet.
 	 *
+	 * @author l.xue.nong
 	 */
 	private class IKSortedLinkSet{
 		//链表头
+		/** The head. */
 		private Lexeme head;
 		//链表尾
+		/** The tail. */
 		private Lexeme tail;
 		//链表的实际大小
+		/** The size. */
 		private int size;
 		
+		/**
+		 * Instantiates a new iK sorted link set.
+		 */
 		private IKSortedLinkSet(){
 			this.size = 0;
 		}
+		
 		/**
-		 * 向链表集合添加词元
-		 * @param lexeme
+		 * Adds the lexeme.
+		 *
+		 * @param lexeme the lexeme
 		 */
 		private void addLexeme(Lexeme lexeme){
 			if(this.size == 0){
@@ -228,9 +317,11 @@ public class Context{
 			}
 			
 		}
+		
 		/**
-		 * 取出链表集合的第一个元素
-		 * @return Lexeme
+		 * Poll first.
+		 *
+		 * @return the lexeme
 		 */
 		private Lexeme pollFirst(){
 			if(this.size == 1){
@@ -251,8 +342,9 @@ public class Context{
 		}
 		
 		/**
-		 * 取出链表集合的最后一个元素
-		 * @return Lexeme
+		 * Poll last.
+		 *
+		 * @return the lexeme
 		 */
 		private Lexeme pollLast(){
 			if(this.size == 1){
@@ -275,8 +367,7 @@ public class Context{
 		}
 		
 		/**
-		 * 剔除集合汇总相邻的切完全包含的lexeme
-		 * 进行最大切分的时候，过滤长度较小的交叠词元
+		 * Exclude overlap.
 		 */
 		private void excludeOverlap(){
 			if(this.size > 1){
@@ -305,6 +396,11 @@ public class Context{
 			}
 		}
 		
+		/**
+		 * Size.
+		 *
+		 * @return the int
+		 */
 		private int size(){
 			return this.size;
 		}

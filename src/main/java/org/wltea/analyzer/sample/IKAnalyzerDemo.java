@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer IKAnalyzerDemo.java 2012-7-6 10:23:23 l.xue.nong$$
  */
 package org.wltea.analyzer.sample;
 
@@ -22,11 +23,17 @@ import org.wltea.analyzer.lucene.IKQueryParser;
 import org.wltea.analyzer.lucene.IKSimilarity;
 
 /**
- * @author linly
+ * The Class IKAnalyzerDemo.
  *
+ * @author l.xue.nong
  */
 public class IKAnalyzerDemo {
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args){
 		//Lucene Document的域名
 		String fieldName = "text";

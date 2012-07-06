@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer FileDictionariesDifferenceListener.java 2012-7-6 10:23:21 l.xue.nong$$
  */
 package net.paoding.analysis.knife;
 
@@ -24,43 +13,81 @@ import net.paoding.analysis.dictionary.support.detection.DifferenceListener;
 import net.paoding.analysis.dictionary.support.detection.Node;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 2.0.2
- * 
+ * The listener interface for receiving fileDictionariesDifference events.
+ * The class that is interested in processing a fileDictionariesDifference
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addFileDictionariesDifferenceListener<code> method. When
+ * the fileDictionariesDifference event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see FileDictionariesDifferenceEvent
  */
 public class FileDictionariesDifferenceListener implements DifferenceListener {
 
+	/** The dictionaries. */
 	private FileDictionaries dictionaries;
 
+	/** The knife box. */
 	private KnifeBox knifeBox;
 
+	/**
+	 * Instantiates a new file dictionaries difference listener.
+	 */
 	public FileDictionariesDifferenceListener() {
 	}
 
+	/**
+	 * Instantiates a new file dictionaries difference listener.
+	 *
+	 * @param dictionaries the dictionaries
+	 * @param knifeBox the knife box
+	 */
 	public FileDictionariesDifferenceListener(Dictionaries dictionaries,
 			KnifeBox knifeBox) {
 		this.dictionaries = (FileDictionaries) dictionaries;
 		this.knifeBox = knifeBox;
 	}
 
+	/**
+	 * Gets the dictionaries.
+	 *
+	 * @return the dictionaries
+	 */
 	public Dictionaries getDictionaries() {
 		return dictionaries;
 	}
 
+	/**
+	 * Sets the dictionaries.
+	 *
+	 * @param dictionaries the new dictionaries
+	 */
 	public void setDictionaries(Dictionaries dictionaries) {
 		this.dictionaries = (FileDictionaries) dictionaries;
 	}
 
+	/**
+	 * Gets the knife box.
+	 *
+	 * @return the knife box
+	 */
 	public KnifeBox getKnifeBox() {
 		return knifeBox;
 	}
 
+	/**
+	 * Sets the knife box.
+	 *
+	 * @param knifeBox the new knife box
+	 */
 	public void setKnifeBox(KnifeBox knifeBox) {
 		this.knifeBox = knifeBox;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.dictionary.support.detection.DifferenceListener#on(net.paoding.analysis.dictionary.support.detection.Difference)
+	 */
 	public synchronized void on(Difference diff) {
 		List/* <Node> */all = new LinkedList/* <Node> */();
 		all.addAll((List/* <Node> */) diff.getDeleted());

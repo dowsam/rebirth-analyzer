@@ -1,30 +1,42 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer ReadListener.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.dictionary.support.filewords;
 
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.0
- * 
+ * The listener interface for receiving read events.
+ * The class that is interested in processing a read
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addReadListener<code> method. When
+ * the read event occurs, that object's appropriate
+ * method is invoked.
+ *
+ * @see ReadEvent
  */
 public interface ReadListener {
+	
+	/**
+	 * On file begin.
+	 *
+	 * @param file the file
+	 * @return true, if successful
+	 */
 	public boolean onFileBegin(String file);
+	
+	/**
+	 * On file end.
+	 *
+	 * @param file the file
+	 */
 	public void onFileEnd(String file);
+	
+	/**
+	 * On word.
+	 *
+	 * @param word the word
+	 */
 	public void onWord(String word);
 }

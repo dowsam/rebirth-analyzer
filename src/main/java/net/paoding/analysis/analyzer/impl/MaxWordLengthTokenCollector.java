@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer MaxWordLengthTokenCollector.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.analyzer.impl;
 
@@ -23,24 +12,25 @@ import net.paoding.analysis.analyzer.TokenCollector;
 import org.apache.lucene.analysis.Token;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 1.1
+ * The Class MaxWordLengthTokenCollector.
+ *
+ * @author l.xue.nong
  */
 public class MaxWordLengthTokenCollector implements TokenCollector {
 
-	/**
-	 * 存储当前被knife分解而成的Token对象
-	 * 
-	 */
+	/** The tokens. */
 	@SuppressWarnings("rawtypes")
 	private LinkedList/* <Token> */tokens = new LinkedList/* <Token> */();
 
+	/** The candidate. */
 	private Token candidate;
 
+	/** The last. */
 	private Token last;
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.analyzer.TokenCollector#iterator()
+	 */
 	@SuppressWarnings("unchecked")
 	public Iterator/* <Token> */iterator() {
 		if (candidate != null) {
@@ -52,6 +42,9 @@ public class MaxWordLengthTokenCollector implements TokenCollector {
 		return iter;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.Collector#collect(java.lang.String, int, int)
+	 */
 	public void collect(String word, int offset, int end) {
 		Token c = candidate != null ? candidate : last;
 		if (c == null) {
@@ -83,6 +76,11 @@ public class MaxWordLengthTokenCollector implements TokenCollector {
 		}
 	}
 
+	/**
+	 * Select.
+	 *
+	 * @param t the t
+	 */
 	protected void select(Token t) {
 		this.tokens.add(t);
 		this.last = t;

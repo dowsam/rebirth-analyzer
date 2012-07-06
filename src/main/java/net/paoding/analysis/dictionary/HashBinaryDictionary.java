@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer HashBinaryDictionary.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.dictionary;
 
@@ -19,59 +8,56 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Dictionary的散列+二叉查找实现。
- * <p>
- * 用于对大数量的，且头字符相同的字符串较多的情况，e.g汉字词语字典。在这种情况下，检索速度将比二叉字典更快。
- * <p>
- * 
- * HashBinaryDictionary以一组已经排序的词语为输入，所有<b>头字符</b>相同的词语划为一个集合作为分字典(使用BinaryDictionary实现)。
- * 查找词语时，先根据第一个字符找得分词典(BinaryDictionary实现)，再从该分词典中定位该词语。
- * <p>
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @see BinaryDictionary
- * 
- * @since 1.0
- * 
+ * The Class HashBinaryDictionary.
+ *
+ * @author l.xue.nong
  */
 public class HashBinaryDictionary implements Dictionary {
 
 	// -------------------------------------------------
 
-	/**
-	 * 字典中所有词语，用于方便{@link #get(int)}方法
-	 */
+	/** The asc words. */
 	private Word[] ascWords;
 
-	/**
-	 * 首字符到分词典的映射
-	 */
+	/** The subs. */
 	private Map/* <Object, SubDictionaryWrap> */subs;
 
-	/**
-	 * 
-	 */
+	/** The hash index. */
 	private final int hashIndex;
 
+	/** The start. */
 	private final int start;
+	
+	/** The end. */
 	private final int end;
+	
+	/** The count. */
 	private final int count;
 
 	// -------------------------------------------------
 
 	/**
-	 * 
-	 * @param ascWords
-	 *            升序排列词语
-	 * @param initialCapacity
-	 * @param loadFactor
+	 * Instantiates a new hash binary dictionary.
+	 *
+	 * @param ascWords the asc words
+	 * @param initialCapacity the initial capacity
+	 * @param loadFactor the load factor
 	 */
 	public HashBinaryDictionary(Word[] ascWords, int initialCapacity,
 			float loadFactor) {
 		this(ascWords, 0, 0, ascWords.length, initialCapacity, loadFactor);
 	}
 
+	/**
+	 * Instantiates a new hash binary dictionary.
+	 *
+	 * @param ascWords the asc words
+	 * @param hashIndex the hash index
+	 * @param start the start
+	 * @param end the end
+	 * @param initialCapacity the initial capacity
+	 * @param loadFactor the load factor
+	 */
 	public HashBinaryDictionary(Word[] ascWords, int hashIndex, int start,
 			int end, int initialCapacity, float loadFactor) {
 		this.ascWords = ascWords;
@@ -87,7 +73,7 @@ public class HashBinaryDictionary implements Dictionary {
 	// -------------------------------------------------
 
 	/**
-	 * 创建分词典映射，为构造函数调用
+	 * Creates the sub dictionaries.
 	 */
 	protected void createSubDictionaries() {
 		if (this.start >= ascWords.length) {
@@ -111,6 +97,13 @@ public class HashBinaryDictionary implements Dictionary {
 		addSubDictionary(beginHashChar, beginIndex, this.end);
 	}
 
+	/**
+	 * Gets the char.
+	 *
+	 * @param s the s
+	 * @param index the index
+	 * @return the char
+	 */
 	protected char getChar(CharSequence s, int index) {
 		if (index >= s.length()) {
 			return (char) 0;
@@ -119,11 +112,11 @@ public class HashBinaryDictionary implements Dictionary {
 	}
 
 	/**
-	 * 将位置在beginIndex和endIndex之间(不包括endIndex)的词语作为一个分词典
-	 * 
-	 * @param hashChar
-	 * @param beginIndex
-	 * @param endIndex
+	 * Adds the sub dictionary.
+	 *
+	 * @param hashChar the hash char
+	 * @param beginIndex the begin index
+	 * @param endIndex the end index
 	 */
 	protected void addSubDictionary(char hashChar, int beginIndex, int endIndex) {
 		Dictionary subDic = createSubDictionary(ascWords, beginIndex, endIndex);
@@ -132,6 +125,14 @@ public class HashBinaryDictionary implements Dictionary {
 		subs.put(keyOf(hashChar), subDicWrap);
 	}
 
+	/**
+	 * Creates the sub dictionary.
+	 *
+	 * @param ascWords the asc words
+	 * @param beginIndex the begin index
+	 * @param endIndex the end index
+	 * @return the dictionary
+	 */
 	protected Dictionary createSubDictionary(Word[] ascWords, int beginIndex,
 			int endIndex) {
 		int count = endIndex - beginIndex;
@@ -143,9 +144,16 @@ public class HashBinaryDictionary implements Dictionary {
 		}
 	}
 
+	/** The Constant capacityCandiate. */
 	protected static final int[] capacityCandiate = { 16, 32, 64, 128, 256,
 			512, 1024, 2048, 4096, 10192 };
 
+	/**
+	 * Gets the capacity.
+	 *
+	 * @param count the count
+	 * @return the capacity
+	 */
 	protected int getCapacity(int count) {
 		int capacity = -1;
 		count <<= 2;
@@ -165,10 +173,16 @@ public class HashBinaryDictionary implements Dictionary {
 
 	// -------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.dictionary.Dictionary#get(int)
+	 */
 	public Word get(int index) {
 		return ascWords[start + index];
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.dictionary.Dictionary#search(java.lang.CharSequence, int, int)
+	 */
 	public Hit search(CharSequence input, int begin, int count) {
 		SubDictionaryWrap subDic = (SubDictionaryWrap) subs.get(keyOf(input
 				.charAt(hashIndex + begin)));
@@ -202,6 +216,9 @@ public class HashBinaryDictionary implements Dictionary {
 		return word;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.dictionary.Dictionary#size()
+	 */
 	public int size() {
 		return count;
 	}
@@ -209,12 +226,10 @@ public class HashBinaryDictionary implements Dictionary {
 	// -------------------------------------------------
 
 	/**
-	 * 字符的在{@link #subs}的key值。
-	 * 
-	 * @param theChar
-	 * @return
-	 * 
-	 * @see #subs
+	 * Key of.
+	 *
+	 * @param theChar the the char
+	 * @return the object
 	 */
 	protected Object keyOf(char theChar) {
 		// return theChar - 0x4E00;// '一'==0x4E00
@@ -222,24 +237,28 @@ public class HashBinaryDictionary implements Dictionary {
 	}
 
 	/**
-	 * 分词典封箱
+	 * The Class SubDictionaryWrap.
+	 *
+	 * @author l.xue.nong
 	 */
 	static class SubDictionaryWrap {
-		/**
-		 * 分词典词组的头字符
-		 */
+		
+		/** The hash char. */
 		char hashChar;
 
-		/**
-		 * 分词典
-		 */
+		/** The dic. */
 		Dictionary dic;
 
-		/**
-		 * 分词典第一个词语在所有词语中的偏移位置
-		 */
+		/** The word index offset. */
 		int wordIndexOffset;
 
+		/**
+		 * Instantiates a new sub dictionary wrap.
+		 *
+		 * @param hashChar the hash char
+		 * @param dic the dic
+		 * @param wordIndexOffset the word index offset
+		 */
 		public SubDictionaryWrap(char hashChar, Dictionary dic,
 				int wordIndexOffset) {
 			this.hashChar = hashChar;

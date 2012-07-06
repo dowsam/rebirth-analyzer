@@ -1,17 +1,6 @@
-/**
- * Copyright 2007 The Apache Software Foundation
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer Detector.java 2012-7-6 10:23:22 l.xue.nong$$
  */
 package net.paoding.analysis.dictionary.support.detection;
 
@@ -22,62 +11,101 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 
- * @author Zhiliang Wang [qieqie.wang@gmail.com]
- * 
- * @since 2.0.2
- * 
+ * The Class Detector.
+ *
+ * @author l.xue.nong
  */
 public class Detector implements Runnable {
 
+	/** The log. */
 	private Log log = LogFactory.getLog(this.getClass());
 
+	/** The listener. */
 	private DifferenceListener listener;
 
+	/** The home. */
 	private File home;
 
+	/** The filter. */
 	private FileFilter filter;
 
+	/** The interval. */
 	private long interval;
 
+	/** The last snapshot. */
 	private Snapshot lastSnapshot;
 	
+	/** The thread. */
 	private Thread thread;
 
+	/** The alive. */
 	private boolean alive = true;
 
+	/**
+	 * Sets the listener.
+	 *
+	 * @param listener the new listener
+	 */
 	public void setListener(DifferenceListener listener) {
 		this.listener = listener;
 	}
 
+	/**
+	 * Instantiates a new detector.
+	 */
 	public Detector() {
 	}
 
 	/**
-	 * 检查间隔
-	 * 
-	 * @param interval
+	 * Sets the interval.
+	 *
+	 * @param interval the new interval
 	 */
 	public void setInterval(int interval) {
 		this.interval = interval * 1000;
 	}
 
+	/**
+	 * Sets the home.
+	 *
+	 * @param home the new home
+	 */
 	public void setHome(File home) {
 		this.home = home;
 	}
 
+	/**
+	 * Sets the home.
+	 *
+	 * @param home the new home
+	 */
 	public void setHome(String home) {
 		this.home = new File(home);
 	}
 
+	/**
+	 * Sets the filter.
+	 *
+	 * @param filter the new filter
+	 */
 	public void setFilter(FileFilter filter) {
 		this.filter = filter;
 	}
 	
+	/**
+	 * Flash.
+	 *
+	 * @return the snapshot
+	 */
 	public Snapshot flash(){
 		return Snapshot.flash(home, filter);
 	}
 
+	/**
+	 * Start.
+	 *
+	 * @param daemon the daemon
+	 */
 	public void start(boolean daemon) {
 		if (lastSnapshot == null) {
 			lastSnapshot = flash();
@@ -88,14 +116,27 @@ public class Detector implements Runnable {
 	}
 	
 	
+	/**
+	 * Gets the last snapshot.
+	 *
+	 * @return the last snapshot
+	 */
 	public Snapshot getLastSnapshot() {
 		return lastSnapshot;
 	}
 	
+	/**
+	 * Sets the last snapshot.
+	 *
+	 * @param last the new last snapshot
+	 */
 	public void setLastSnapshot(Snapshot last) {
 		this.lastSnapshot = last;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
 		if (interval <= 0)
 			throw new IllegalArgumentException(
@@ -106,6 +147,9 @@ public class Detector implements Runnable {
 		}
 	}
 
+	/**
+	 * Force detecting.
+	 */
 	public void forceDetecting() {
 		Snapshot current = flash();
 		Difference diff = current.diff(lastSnapshot);
@@ -121,11 +165,17 @@ public class Detector implements Runnable {
 		}
 	}
 
+	/**
+	 * Sets the stop.
+	 */
 	public void setStop() {
 		alive = false;
 		thread = null;
 	}
 
+	/**
+	 * Sleep.
+	 */
 	private void sleep() {
 		try {
 			Thread.sleep(interval);
@@ -134,6 +184,11 @@ public class Detector implements Runnable {
 		}
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		Detector d = new Detector();
 		d.setInterval(1);

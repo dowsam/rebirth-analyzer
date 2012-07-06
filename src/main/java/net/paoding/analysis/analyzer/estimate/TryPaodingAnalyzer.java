@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer TryPaodingAnalyzer.java 2012-7-6 10:23:21 l.xue.nong$$
+ */
 package net.paoding.analysis.analyzer.estimate;
 
 import java.io.BufferedReader;
@@ -14,17 +18,45 @@ import net.paoding.analysis.knife.PaodingMaker;
 
 import org.apache.lucene.analysis.Analyzer;
 
+/**
+ * The Class TryPaodingAnalyzer.
+ *
+ * @author l.xue.nong
+ */
 public class TryPaodingAnalyzer {
+	
+	/** The Constant ARGS_TIP. */
 	private static final String ARGS_TIP = ":";
+	
+	/** The input. */
 	static String input = null;
+	
+	/** The file. */
 	static String file = null;
+	
+	/** The reader. */
 	static Reader reader = null;
+	
+	/** The charset. */
 	static String charset = null;
+	
+	/** The mode. */
 	static String mode = null;
+	
+	/** The analyzer name. */
 	static String analyzerName = null;
+	
+	/** The print. */
 	static String print = null;
+	
+	/** The properties. */
 	static String properties = PaodingMaker.DEFAULT_PROPERTIES_PATH;
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		try {
 			resetArgs();
@@ -79,6 +111,9 @@ public class TryPaodingAnalyzer {
 
 
 
+	/**
+	 * Reset args.
+	 */
 	private static void resetArgs() {
 		input = null;
 		file = null;
@@ -92,6 +127,11 @@ public class TryPaodingAnalyzer {
 	
 
 	
+	/**
+	 * Analysing.
+	 *
+	 * @throws Exception the exception
+	 */
 	private static void analysing() throws Exception {
 		Analyzer analyzer;
 		if (analyzerName == null || analyzerName.length() == 0 || analyzerName.equalsIgnoreCase("paoding")) {
@@ -154,6 +194,12 @@ public class TryPaodingAnalyzer {
 		}
 	}
 
+	/**
+	 * Gets the input from console.
+	 *
+	 * @return the input from console
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private static String getInputFromConsole() throws IOException {
 		printTitleIfNotPrinted("");
 		String input = null;
@@ -198,6 +244,9 @@ public class TryPaodingAnalyzer {
 		return input == null ? null : input.trim();
 	}
 
+	/**
+	 * Prints the help.
+	 */
 	private static void printHelp() {
 		String app = System.getProperty("paoding.try.app",
 				"TryPaodingAnalyzer");
@@ -227,8 +276,17 @@ public class TryPaodingAnalyzer {
 	}
 	
 	
+	/** The title printed. */
 	private static boolean titlePrinted = false;
+	
+	/** The welcome printed. */
 	private static boolean welcomePrinted = false;
+	
+	/**
+	 * Prints the title if not printed.
+	 *
+	 * @param prefix the prefix
+	 */
 	private static void printTitleIfNotPrinted(String prefix) {
 		if (!titlePrinted) {
 			System.out.println();
@@ -249,14 +307,39 @@ public class TryPaodingAnalyzer {
 	}
 	
 		
+	/**
+	 * Gets the content.
+	 *
+	 * @param path the path
+	 * @param encoding the encoding
+	 * @return the content
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	static String getContent(String path, String encoding) throws IOException {
 		return (String) read(path, encoding, true);
 	}
 	
+	/**
+	 * Gets the reader.
+	 *
+	 * @param path the path
+	 * @param encoding the encoding
+	 * @return the reader
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	static Reader getReader(String path, String encoding) throws IOException {
 		return (Reader) read(path, encoding, false);
 	}
 	
+	/**
+	 * Read.
+	 *
+	 * @param path the path
+	 * @param encoding the encoding
+	 * @param return_string the return_string
+	 * @return the object
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	static Object read(String path, String encoding, boolean return_string) throws IOException {
 		InputStream in;
 		if (path.startsWith("classpath:")) {

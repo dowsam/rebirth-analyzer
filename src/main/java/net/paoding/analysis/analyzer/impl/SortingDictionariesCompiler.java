@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer SortingDictionariesCompiler.java 2012-7-6 10:23:22 l.xue.nong$$
+ */
 package net.paoding.analysis.analyzer.impl;
 
 import java.io.BufferedOutputStream;
@@ -20,9 +24,19 @@ import net.paoding.analysis.knife.Dictionaries;
 import net.paoding.analysis.knife.DictionariesCompiler;
 import net.paoding.analysis.knife.Knife;
 
+/**
+ * The Class SortingDictionariesCompiler.
+ *
+ * @author l.xue.nong
+ */
 public class SortingDictionariesCompiler implements DictionariesCompiler {
+	
+	/** The Constant VERSION. */
 	public static final String VERSION = "2";
 	
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.DictionariesCompiler#shouldCompile(java.util.Properties)
+	 */
 	public boolean shouldCompile(Properties p) throws Exception {
 		String dicHome = p.getProperty("paoding.dic.home.absolute.path");
 		File dicHomeFile = new File(dicHome);
@@ -53,6 +67,9 @@ public class SortingDictionariesCompiler implements DictionariesCompiler {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.DictionariesCompiler#compile(net.paoding.analysis.knife.Dictionaries, net.paoding.analysis.knife.Knife, java.util.Properties)
+	 */
 	public void compile(Dictionaries dictionaries, Knife knife, Properties p) throws Exception {
 		String dicHome = p.getProperty("paoding.dic.home.absolute.path");
 		String noiseCharactor = getProperty(p, Constants.DIC_NOISE_CHARACTOR);
@@ -125,6 +142,16 @@ public class SortingDictionariesCompiler implements DictionariesCompiler {
 
 	
 	
+	/**
+	 * Sort compile.
+	 *
+	 * @param dictionary the dictionary
+	 * @param dicFile the dic file
+	 * @param charsetName the charset name
+	 * @throws FileNotFoundException the file not found exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws UnsupportedEncodingException the unsupported encoding exception
+	 */
 	private void sortCompile(final Dictionary dictionary, 
 			File dicFile, String charsetName) throws FileNotFoundException,
 			IOException, UnsupportedEncodingException {
@@ -152,6 +179,9 @@ public class SortingDictionariesCompiler implements DictionariesCompiler {
 		dicFile.setReadOnly();
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.paoding.analysis.knife.DictionariesCompiler#readCompliedDictionaries(java.util.Properties)
+	 */
 	public Dictionaries readCompliedDictionaries(Properties p) {
 		String dicHomeAbsolutePath = p.getProperty("paoding.dic.home.absolute.path");
 		String noiseCharactor = getProperty(p, Constants.DIC_NOISE_CHARACTOR);
@@ -167,6 +197,13 @@ public class SortingDictionariesCompiler implements DictionariesCompiler {
 				confucianFamilyName, combinatorics, charsetName, maxWordLen);
 	}
 	
+	/**
+	 * Gets the property.
+	 *
+	 * @param p the p
+	 * @param name the name
+	 * @return the property
+	 */
 	private static String getProperty(Properties p, String name) {
 		return Constants.getProperty(p, name);
 	}

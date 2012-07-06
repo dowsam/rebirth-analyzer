@@ -1,5 +1,6 @@
-/**
- * 
+/*
+ * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
+ * Info:rebirth-analyzer IKTokenizer.java 2012-7-6 10:23:23 l.xue.nong$$
  */
 package org.wltea.analyzer.lucene;
 
@@ -14,28 +15,30 @@ import org.wltea.analyzer.Lexeme;
 
 
 /**
- * IK Analyzer v3.2
- * Lucene3.0 Tokenizer适配器类
- * 它封装了IKSegmentation实现
- * 
- * @author 林良益
+ * The Class IKTokenizer.
  *
+ * @author l.xue.nong
  */
 public final class IKTokenizer extends Tokenizer {
 	
 	//IK分词器实现
+	/** The _ ik implement. */
 	private IKSegmentation _IKImplement;
 	//词元文本属性
+	/** The term att. */
 	private TermAttribute termAtt;
 	//词元位移属性
+	/** The offset att. */
 	private OffsetAttribute offsetAtt;
 	//记录最后一个词元的结束位置
+	/** The final offset. */
 	private int finalOffset;
 
 	/**
-	 * Lucene Tokenizer适配器类构造函数
-	 * @param in
-	 * @param isMaxWordLength 当为true时，分词器进行最大词长切分；当为false是，采用最细粒度切分
+	 * Instantiates a new iK tokenizer.
+	 *
+	 * @param in the in
+	 * @param isMaxWordLength the is max word length
 	 */
 	public IKTokenizer(Reader in , boolean isMaxWordLength) {
 	    super(in);
@@ -44,6 +47,9 @@ public final class IKTokenizer extends Tokenizer {
 		_IKImplement = new IKSegmentation(in , isMaxWordLength);
 	}	
 	
+	/* (non-Javadoc)
+	 * @see org.apache.lucene.analysis.TokenStream#incrementToken()
+	 */
 	@Override
 	public final boolean incrementToken() throws IOException {
 		//清除所有的词元属性
@@ -75,6 +81,9 @@ public final class IKTokenizer extends Tokenizer {
 		_IKImplement.reset(input);
 	}	
 	
+	/* (non-Javadoc)
+	 * @see org.apache.lucene.analysis.TokenStream#end()
+	 */
 	@Override
 	public final void end() {
 	    // set final offset 
