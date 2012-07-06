@@ -3,19 +3,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>cn.com.restart</groupId>
-		<artifactId>restart-parent</artifactId>
+		<groupId>cn.com.rebirth</groupId>
+		<artifactId>rebirth-parent</artifactId>
 		<version>0.0.1.RC1-SNAPSHOT</version>
 	</parent>
-	<artifactId>restart-analyzer</artifactId>
-	<groupId>cn.com.restart</groupId>
+	<artifactId>rebirth-analyzer</artifactId>
+	<groupId>cn.com.rebirth</groupId>
 	<packaging>jar</packaging>
 	<version>0.0.1.RC1-SNAPSHOT</version>
-	<name>Restart :: Module :: restart-analyzer</name>
+	<name>Rebirth :: Module :: rebirth-analyzer</name>
 	<dependencies>
 		<dependency>
-			<groupId>cn.com.restart</groupId>
-			<artifactId>restart-commons</artifactId>
+			<groupId>cn.com.rebirth</groupId>
+			<artifactId>rebirth-commons</artifactId>
 			<optional>true</optional>
 		</dependency>
 		<!-- test begin -->

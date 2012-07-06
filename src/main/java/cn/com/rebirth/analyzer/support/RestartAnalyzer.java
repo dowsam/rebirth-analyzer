@@ -2,7 +2,7 @@
  * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
  * Info:summall-analyzer SumMallAnalyzer.java 2012-2-13 14:32:47 l.xue.nong$$
  */
-package cn.com.restart.analyzer.support;
+package cn.com.rebirth.analyzer.support;
 
 import java.io.Reader;
 import java.io.Serializable;
@@ -10,7 +10,7 @@ import java.io.Serializable;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 
-import cn.com.restart.analyzer.RestartAnalyzers;
+import cn.com.rebirth.analyzer.RestartAnalyzers;
 
 /**
  * The Class SumMallAnalyzer.

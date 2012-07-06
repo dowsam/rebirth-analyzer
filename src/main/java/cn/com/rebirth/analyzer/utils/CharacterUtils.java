@@ -1,4 +1,4 @@
-package cn.com.restart.analyzer.utils;
+package cn.com.rebirth.analyzer.utils;
 
 public class CharacterUtils {
 

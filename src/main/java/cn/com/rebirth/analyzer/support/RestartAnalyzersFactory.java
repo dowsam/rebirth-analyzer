@@ -2,7 +2,7 @@
  * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
  * Info:summall-analyzer SumMallAnalyzersFactory.java 2012-2-13 15:48:00 l.xue.nong$$
  */
-package cn.com.restart.analyzer.support;
+package cn.com.rebirth.analyzer.support;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.com.restart.analyzer.InitializationAnalyzer;
-import cn.com.restart.analyzer.RestartAnalyzers;
-import cn.com.restart.commons.utils.ClassResolverUtils;
+import cn.com.rebirth.analyzer.InitializationAnalyzer;
+import cn.com.rebirth.analyzer.RestartAnalyzers;
+import cn.com.rebirth.commons.utils.ClassResolverUtils;
 
 /**
  * A factory for creating SumMallAnalyzers objects.

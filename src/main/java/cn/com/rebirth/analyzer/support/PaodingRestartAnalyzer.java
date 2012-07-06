@@ -2,11 +2,11 @@
  * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
  * Info:summall-analyzer PaodingSumMallAnalyzer.java 2012-2-13 14:26:54 l.xue.nong$$
  */
-package cn.com.restart.analyzer.support;
+package cn.com.rebirth.analyzer.support;
 
 import net.paoding.analysis.analyzer.PaodingAnalyzer;
-import cn.com.restart.analyzer.AbstractRestartAnalyzer;
-import cn.com.restart.analyzer.RestartAnalyzers;
+import cn.com.rebirth.analyzer.AbstractRestartAnalyzer;
+import cn.com.rebirth.analyzer.RestartAnalyzers;
 
 /**
  * The Class PaodingSumMallAnalyzer.

@@ -2,7 +2,7 @@
  * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
  * Info:summall-analyzer SumMallSimilarity.java 2012-2-17 13:45:44 l.xue.nong$$
  */
-package cn.com.restart.analyzer;
+package cn.com.rebirth.analyzer;
 
 /**
  * The Class SumMallSimilarity.

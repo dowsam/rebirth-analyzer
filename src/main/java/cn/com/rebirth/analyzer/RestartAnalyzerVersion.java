@@ -2,9 +2,9 @@
  * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
  * Info:summall-analyzer VersionImpl.java 2012-2-3 13:59:46 l.xue.nong$$
  */
-package cn.com.restart.analyzer;
+package cn.com.rebirth.analyzer;
 
-import cn.com.restart.commons.Version;
+import cn.com.rebirth.commons.Version;
 
 /**
  * The Class MiniProjectVersion.

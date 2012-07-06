@@ -2,7 +2,7 @@
  * Copyright (c) 2005-2012 www.summall.com.cn All rights reserved
  * Info:summall-analyzer AbstractSumMallAnalyzer.java 2012-2-13 14:22:53 l.xue.nong$$
  */
-package cn.com.restart.analyzer;
+package cn.com.rebirth.analyzer;
 
 import java.io.Reader;
 

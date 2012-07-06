@@ -2,16 +2,16 @@
  * Copyright (c) 2005-2012 www.china-cti.com All rights reserved
  * Info:restart-analyzer IkRestartAnalyzer.java 2012-7-4 13:56:03 l.xue.nong$$
  */
-package cn.com.restart.analyzer.support;
+package cn.com.rebirth.analyzer.support;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
-import cn.com.restart.analyzer.AbstractRestartAnalyzer;
-import cn.com.restart.analyzer.InitializationAnalyzer;
-import cn.com.restart.analyzer.RestartAnalyzers;
-import cn.com.restart.commons.StopWatch;
+import cn.com.rebirth.analyzer.AbstractRestartAnalyzer;
+import cn.com.rebirth.analyzer.InitializationAnalyzer;
+import cn.com.rebirth.analyzer.RestartAnalyzers;
+import cn.com.rebirth.commons.StopWatch;
 
 /**
  * The Class IkRestartAnalyzer.
